@@ -1,0 +1,24 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>מוצרי החנות</title>
+</head>
+<body>
+    <div style="text-align : center">
+       <h1>עמוד מוצרים</h1>
+            <form action="">
+                <button class="ui blue button" style="font-size: 20px" formaction="/Products/Milky">חלב</button>
+                <button class="ui red button" style="font-size: 20px" formaction="/Products/Meat">בשר</button>
+                <button class="ui green button" style="font-size: 20px" formaction="/Products/Vegatable">ירקות</button>
+                <button class="ui gray button" style="font-size: 20px" formaction="/Products/General">כללי</button>
+            </form>
+            @RenderBody()
+    </div>
+</body>
+</html>

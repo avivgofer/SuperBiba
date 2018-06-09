@@ -1,0 +1,25 @@
+﻿@model IEnumerable<StoreApp.Models.Product>
+@{
+    ViewData["Title"] = "Meat";
+    Layout = "~/Views/Shared/ProductsLayout.cshtml";
+}
+
+
+<h2>Meat</h2>
+    <br />
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            var name = item.ProductName;
+            var img = item.ImageURL;
+            <!-- Columns start at 50% wide on mobile and bump up to 33.3% wide on desktop -->
+
+            <div class="col-6 col-md-4">
+                <h3>@name</h3>
+                <img src="~/images/products/meat/@img" class="img-thumbnail" style="width: 240px; height: 240px; ">
+            </div>
+    }
+       </div>
+
+    </table>
+
