@@ -20,4 +20,8 @@
     <None Include="wwwroot\images\shoplogo.png" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\vendor\js\" />
+  </ItemGroup>
+
 </Project>

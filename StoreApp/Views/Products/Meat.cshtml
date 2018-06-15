@@ -3,23 +3,61 @@
     ViewData["Title"] = "Meat";
     Layout = "~/Views/Shared/ProductsLayout.cshtml";
 }
+<br />
+<div class="row">
+    @foreach (var item in Model)
+    {
 
-
-<h2>Meat</h2>
-    <br />
-    <div class="row">
-        @foreach (var item in Model)
-        {
-            var name = item.ProductName;
-            var img = item.ImageURL;
-            <!-- Columns start at 50% wide on mobile and bump up to 33.3% wide on desktop -->
-
-            <div class="col-6 col-md-4">
-                <h3>@name</h3>
-                <img src="~/images/products/meat/@img" class="img-thumbnail" style="width: 240px; height: 240px; ">
-            </div>
+        var name = item.ProductName;
+        var img = item.ImageURL;
+        var price = item.cost;
+    <div class="col-md-3 text-center">
+        <img src="~/images/products/Meat/@img" style="width:150px; height:150px">
+        <br>
+        <br>
+        @name - <strong> @price ש"ח</strong>
+        <br>
+        <br>
+        <a href="#0" class="cd-add-to-cart" data-price=@price>הוסף לעגלה</a>
+        <br />
+        <br />
+        <br />
+    </div>
     }
-       </div>
+</div>
 
-    </table>
 
+<div class="cd-cart-container empty">
+    <a href="#0" class="cd-cart-trigger">
+        עגלה
+        <ul class="count">
+            <!-- cart items count -->
+            <li>0</li>
+            <li>0</li>
+        </ul> <!-- .count -->
+    </a>
+    <div class="cd-cart">
+        <div class="wrapper">
+            <header>
+                <h2>עגלה</h2>
+                <span class="undo">המוצר הוסר . <a href="#0">חזרה </a></span>
+            </header>
+
+            <div class="body">
+                <ul>
+                    <!-- products added to the cart will be inserted here using JavaScript -->
+                </ul>
+            </div>
+            <footer>
+                <a href="#0" class="checkout btn"><em>סיכום הזמנה - ש"ח<span>0</span></em></a>
+            </footer>
+        </div>
+    </div> <!-- .cd-cart -->
+</div> <!-- cd-cart-container -->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script>
+    if (!window.jQuery) document.write('<script src="js/jquery-3.0.0.min.js"><\/script>');
+</script>
+<script src="~/js/cart.js"></script> <!-- Resource CartJS -->
+<script src="~/js/main.js"></script> <!-- Resource jQuery -->

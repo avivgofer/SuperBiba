@@ -1,7 +1,7 @@
 jQuery(document).ready(function($){
-	var cartWrapper = $('.cd-cart-container');
+    var cartWrapper = $('.cd-cart-container');
 	//product id - you don't need a counter in your real project but you can use your real product id
-	var productId = 0;
+    var productId = 0;
 
 	if( cartWrapper.length > 0 ) {
 		//store jQuery objects
@@ -16,15 +16,16 @@ jQuery(document).ready(function($){
 
 		//add product to cart
 		addToCartBtn.on('click', function(event){
-			event.preventDefault();
-			addToCart($(this));
+            event.preventDefault();
+            console.log("entered");
+            addToCart($(this));
 		});
 
 		//open/close cart
-		cartTrigger.on('click', function(event){
+        cartTrigger.on('click', function (event) {
 			event.preventDefault();
-			toggleCart();
-		});
+            toggleCart();
+        });
 
 		//close cart when clicking on the .cd-cart-container::before (bg layer)
 		cartWrapper.on('click', function(event){
