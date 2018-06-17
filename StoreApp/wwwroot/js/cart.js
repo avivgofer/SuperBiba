@@ -1,11 +1,12 @@
-jQuery(document).ready(function($){
+﻿jQuery(document).ready(function($){
     var cartWrapper = $('.cd-cart-container');
 	//product id - you don't need a counter in your real project but you can use your real product id
-    var productId = 0;
+    var productId = 0; 
+    var productsCounter = 0;
 
 	if( cartWrapper.length > 0 ) {
 		//store jQuery objects
-		var cartBody = cartWrapper.find('.body')
+        var cartBody = cartWrapper.find('.body');
 		var cartList = cartBody.find('ul').eq(0);
 		var cartTotal = cartWrapper.find('.checkout').find('span');
 		var cartTrigger = cartWrapper.children('.cd-cart-trigger');
@@ -17,7 +18,7 @@ jQuery(document).ready(function($){
 		//add product to cart
 		addToCartBtn.on('click', function(event){
             event.preventDefault();
-            console.log("entered");
+            console.log("Product added");
             addToCart($(this));
 		});
 
@@ -35,7 +36,7 @@ jQuery(document).ready(function($){
 		//delete an item from the cart
 		cartList.on('click', '.delete-item', function(event){
 			event.preventDefault();
-			removeProduct($(event.target).parents('.product'));
+            removeProduct($(event.target).parents('.product'));
 		});
 
 		//update item quantity
@@ -75,34 +76,60 @@ jQuery(document).ready(function($){
 		}
 	}
 
-	function addToCart(trigger) {
+	function addToCart(product) {
 		var cartIsEmpty = cartWrapper.hasClass('empty');
 		//update cart product list
-		addProduct();
+        addProduct($(product));
 		//update number of items 
 		updateCartCount(cartIsEmpty);
 		//update total price
-		updateCartTotal(trigger.data('price'), true);
+        updateCartTotal(product.data('price'), true);
 		//show cart
 		cartWrapper.removeClass('empty');
-	}
+    }
+    function saveToLocalStorage(productName, productPrice, productImage) {
 
-	function addProduct() {
+        var data = { name: productName, price: productPrice, image: productImage };
+        console.log(productName);
+        localStorage.setItem(data.name, JSON.stringify(data));
+        productsCounter = productsCounter + 1;
+    }
+
+    function loadFromLocalStorage() {
+    }
+
+    function removeFromLocalStorage(productName) {
+        localStorage.removeItem(productName);
+        console.log('product' + productName + 'removed.');
+        productsCounter = productsCounter - 1;
+    }
+
+    function addProduct(prod) {
 		//this is just a product placeholder
 		//you should insert an item with the selected product info
 		//replace productId, productName, price and url with your real product info
-		productId = productId + 1;
-		var productAdded = $('<li class="product"><div class="product-image"><a href="#0"><img src="img/product-preview.png" alt="placeholder"></a></div><div class="product-details"><h3><a href="#0">Product Name</a></h3><span class="price">$25.99</span><div class="actions"><a href="#0" class="delete-item">Delete</a><div class="quantity"><label for="cd-product-'+ productId +'">Qty</label><span class="select"><select id="cd-product-'+ productId +'" name="quantity"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option></select></span></div></div></div></li>');
+        productId = productId + 1;
+        saveToLocalStorage;
+        var imageAddress = (prod.data('image'));
+        var price = (prod.data('price'));
+        var prodname = (prod.data('productname'));
+        saveToLocalStorage(prodname, price, imageAddress);
+        var name = "product" + productsCounter - 1;
+        var temo = localStorage.getItem(name);
+        console.log('looking for product' + productsCounter);
+        console.log(temo);
+        console.log('added!!');
+        var productAdded = $(`<li class="product"> <div class="product-image"> <a href="#0"><img src= ${imageAddress}alt="placeholder"></a> </div> <div class="product-details"><p style="font-size:16px;"><a href="#0">${prodname} </a> </p><span class="price">${price}₪<div class="actions"><a href="#0" class="delete-item">מחק</a><div class="quantity"><label for="cd-product-'+ productId +'">כמות</label><span class="select"><select id="cd-product-'+ productId +'" name="quantity"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option></select></span></div></div></div></li>`);
 		cartList.prepend(productAdded);
 	}
 
-	function removeProduct(product) {
+    function removeProduct(product) {
 		clearInterval(undoTimeoutId);
 		cartList.find('.deleted').remove();
 		
 		var topPosition = product.offset().top - cartBody.children('ul').offset().top ,
 			productQuantity = Number(product.find('.quantity').find('select').val()),
-			productTotPrice = Number(product.find('.price').text().replace('$', '')) * productQuantity;
+            productTotPrice = Number(product.find('.price').text().replace('₪', '')) * productQuantity;
 		
 		product.css('top', topPosition+'px').addClass('deleted');
 
@@ -125,7 +152,7 @@ jQuery(document).ready(function($){
 		cartList.children('li:not(.deleted)').each(function(){
 			var singleQuantity = Number($(this).find('select').val());
 			quantity = quantity + singleQuantity;
-			price = price + singleQuantity*Number($(this).find('.price').text().replace('$', ''));
+            price = price + singleQuantity * Number($(this).find('.price').text().replace('₪', ''));
 		});
 
 		cartTotal.text(price.toFixed(2));

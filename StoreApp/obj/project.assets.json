@@ -13242,9 +13242,9 @@
       "Microsoft.AspNetCore.All >= 2.0.6",
       "Microsoft.EntityFrameworkCore >= 2.1.0",
       "Microsoft.EntityFrameworkCore.Relational >= 2.1.0",
-      "Microsoft.EntityFrameworkCore.Tools >= 2.1.0",
       "Microsoft.NETCore.App >= 2.0.0",
-      "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 2.0.3"
+      "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 2.0.3",
+      "microsoft.entityframeworkcore.tools >= 2.1.0"
     ]
   },
   "packageFolders": {
@@ -13303,10 +13303,6 @@
             "target": "Package",
             "version": "[2.1.0, )"
           },
-          "Microsoft.EntityFrameworkCore.Tools": {
-            "target": "Package",
-            "version": "[2.1.0, )"
-          },
           "Microsoft.NETCore.App": {
             "target": "Package",
             "version": "[2.0.0, )",
@@ -13315,6 +13311,10 @@
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
             "target": "Package",
             "version": "[2.0.3, )"
+          },
+          "microsoft.entityframeworkcore.tools": {
+            "target": "Package",
+            "version": "[2.1.0, )"
           }
         },
         "imports": [

@@ -47,7 +47,7 @@ namespace StoreApp
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Users}/{action=login}/{id?}");
+                    template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

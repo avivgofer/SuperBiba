@@ -1,17 +1,66 @@
-﻿@{
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
     ViewData["Title"] = "Contact";
 }
-<h2>@ViewData["Title"]</h2>
-<h3>@ViewData["Message"]</h3>
+<style>
+    #map_canvas {
+        display: none;
+    }
+</style>
+<center>
+    <br />
+    <br />
+    <h2 style="font-family:'Suez One', serif;">בואו לבקר אותנו בסניפים שלנו !</h2>
+    <i class="subway icon" style="font-size:40px;"></i>
+    <p style="font-family:'Varela Round', serif; font-size: 18px;">
+        סניף המכללה למנהל רחוב יצחק רבין ראשון לציון<br />
+        סניף אחד העם 21 ראשון לציון
+    </p>
+        <div style="height:100%; width:100%; position:center; text-align:center;">
+            <center>
+                <div class="ui piled segment" id="map_canvas" style=" position:center; width:600px; height:400px;"></div>
+            </center>
+       </div>
+    <br />
 
-<address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
-</address>
+    <div class="ui massive message" style="text-align:center;">
+        <p style="font-family:'Varela Round', serif; font-size: 18px;">
+            נשמח לעמוד לרשותכם.
+            <br />
+            טלפון להזמנות : 0503673664
+            <br />
+            מייל : eliranEliranSeanAviv@gmail.com
+        </p>
+    </div>
 
-<address>
-    <strong>Support:</strong> <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-</address>
+</center>
+<script>
+    function displayMap() {
+        document.getElementById('map_canvas').style.display = "block";
+        initialize();
+    }
+    function initialize() {
+        // create the map
+        var myOptions = {
+            zoom: 12,
+            center: new google.maps.LatLng(31.968360, 34.788274),
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        }
+        map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+        var position1 = new google.maps.Marker({
+            position: new google.maps.LatLng(31.968895, 34.772840),
+            title: "סניף המכללה למנהל"
+        });
+        position1.setMap(map);
+
+        var position2 = new google.maps.Marker({
+            position: new google.maps.LatLng(31.962513, 34.807691),
+            title: "סניף אחר שלנו"
+        });
+        position2.setMap(map);
+    }
+    window.onload = displayMap;
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHfrMCGKVV-wfWMLlkT8nwewHedtQQEhE&callback=initMap"
+        async defer></script>

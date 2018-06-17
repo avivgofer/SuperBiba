@@ -25,12 +25,8 @@ namespace StoreApp.Controllers
 
         public IActionResult Contact()
         {
-            ViewData["Message"] = "Your contact page.";
+            ViewData["Message"] = "ContactPage";
 
-            return View();
-        }
-        public IActionResult Support()
-        {
             return View();
         }
 

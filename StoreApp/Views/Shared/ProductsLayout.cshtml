@@ -2,20 +2,14 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700" rel="stylesheet">
-    <link rel="stylesheet" href="~/css/reset.css"> <!-- CSS reset -->
     <link rel="stylesheet" href="~/css/cart.css"> <!-- Resource style -->
-    <title>מוצרי החנות</title>
-</head>
-<body>
+    <style>
+        ul {
+            list-style-type: none;
+        }
+    </style>
     <div style="text-align : center">
-        <h1>עמוד מוצרים</h1>
         <form action="">
             <button class="ui blue button" style="font-size: 20px" formaction="/Products/Milky">חלב</button>
             <button class="ui red button" style="font-size: 20px" formaction="/Products/Meat">בשר</button>
@@ -24,6 +18,4 @@
         </form>
         @RenderBody()
     </div>
-
-</body>
-</html>
+    <script src="~/js/cart.js"></script>
