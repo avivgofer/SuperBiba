@@ -12,19 +12,15 @@ body {
   width: 100%;
 }
 
-#page-wrapper {
-  padding: 0 15px;
-  min-height: 568px;
-  background-color: #fff;
-}
+
 
 @media(min-width:768px) {
-  #page-wrapper {
-    position: inherit;
-    margin: 0 250px 0 0;
-    padding: 0 30px;
-    border-right: 1px solid #e7e7e7;
-  }
+    #page-wrapper {
+        position: inherit;
+        margin: 0 0 0 250px;
+        padding: 0 30px;
+        border-right: 100px solid #e7e7e7;
+    }
 }
 
 .navbar-top-links li {
@@ -83,7 +79,7 @@ body {
 
 .sidebar .sidebar-nav.navbar-collapse {
   padding-left: 0;
-  padding-right: 0;
+  padding-right:0;
 }
 
 .sidebar .sidebar-search {
@@ -127,8 +123,8 @@ body {
   .sidebar {
     z-index: 1;
     position: absolute;
-    width: 250px;
-    margin-top: 51px;
+    width: 100px;
+    margin-top: 10px;
   }
 
   .navbar-top-links .dropdown-messages,
