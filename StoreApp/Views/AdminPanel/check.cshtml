@@ -1,10 +1,8 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "AdminPanelLayout";
     Layout = null;
+
 }
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -68,14 +66,12 @@
                 <a dir="rtl" class="navbar-brand" href="http://localhost:51220/home/index" style="right:0">החנות שלנו</a>
 
             </div>
-            <a class="pull-left" style="position: absolute; left: 10%;" href="#">חזרה לממשק מנהל</a>
-       
 
-                <!-- /.navbar-header -->
+            <!-- /.navbar-header -->
 
-                <div style="position: absolute; left: 4%; ">
-                    <a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-                </div>
+            <div style="position: absolute; left: 3%; ">
+                <a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+            </div>
 
         </nav>
         <!-- /.navbar-top-links -->
@@ -138,24 +134,21 @@
 
         <div dir="rtl" id="page-wrapper" style="min-height: 564px;">
             <div dir="rtl" class="row">
-
-                <!-- /.panel -->
-                
-                <center class="col-xs-12 .col-sm-6 .col-lg-8">
-                    @RenderBody()
-                    <!-- /.panel-body -->
-                </center>
                
                 <!-- /.panel -->
+                <div class="col-lg-8">
+                   
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+
+
+
             </div>
-
-
-
+            
+            <!-- /.panel-footer -->
         </div>
-
-        <!-- /.panel-footer -->
-    </div>
-    
     
 
     <script src="js/jquery-1.11.0.js"></script>

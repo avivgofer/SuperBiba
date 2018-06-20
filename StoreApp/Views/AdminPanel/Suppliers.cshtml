@@ -1,0 +1,48 @@
+﻿@model IEnumerable<StoreApp.Models.Supplier>
+
+@{
+    ViewData["Title"] = "Suppliers";
+    Layout = "~/Views/Shared/AdminPanelLayout.cshtml";
+}
+
+<h2>רשימת ספקים</h2>
+
+<p>
+    <a asp-action="Create">הכנס ספק חדש</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.CompanyName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PhoneNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Address)
+                </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompanyName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhoneNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ID">ערוך פרטי ספק</a> |
+                <a asp-action="Details" asp-route-id="@item.ID">פרטי ספק</a> |
+                <a asp-action="Delete" asp-route-id="@item.ID">מחיקת ספק</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
