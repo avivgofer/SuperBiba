@@ -3,41 +3,26 @@
     ViewData["Title"] = "Milky";
     Layout = "~/Views/Shared/ProductsLayout.cshtml";
 }
-<h2>Milky</h2>
-<div class="shopping-cart">
-    <!-- Title -->
-    <div class="title">
-        Shopping Bag
-    </div>
-    <!-- Products for each -->
-    <div class="item">
-        <div class="buttons">
-            <span class="delete-btn"></span>
-            <span class="like-btn"></span>
+<br />
+<div class="row">
+    @foreach (var item in Model)
+    {
+        var name = item.ProductName;
+        var img = item.ImageURL;
+        var price = item.cost;
+        var productId = item.ID;
+        <div class="col-md-3 text-center">
+            <img src="~/images/products/milky/@img" style="width:150px; height:150px">
+            <br>
+            <br>
+            @name - <strong> @price₪</strong>
+            <br>
+            <br>
+            <a href="#0" class="cd-add-to-cart" data-prodid=@productId data-price=@price data-productname="@name" data-image="&quot/images/products/Milky/@img&quot">הוסף לעגלה</a>
+            <br />
+            <br />
+            <br />
         </div>
-
-        <div class="image">
-            <img src="item-1.png" alt="" />
-        </div>
-
-        <div class="description">
-            <span>Common Projects</span>
-            <span>Bball High</span>
-            <span>White</span>
-        </div>
-
-        <div class="quantity">
-            <button class="plus-btn" type="button" name="button">
-                <img src="plus.svg" alt="" />
-            </button>
-            <input type="text" name="name" value="1">
-            <button class="minus-btn" type="button" name="button">
-                <img src="~/images/icons/minus.svg" alt="" />
-            </button>
-        </div>
-
-        <div class="total-price">$549</div>
-    </div>
+    }
 </div>
-
 

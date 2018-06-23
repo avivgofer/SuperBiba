@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
 using StoreApp.Data;
 using StoreApp.Models;
 
@@ -249,11 +251,48 @@ namespace StoreApp.Controllers
         }
 
         // GET: Products/Create
-        public IActionResult Create()
+        public IActionResult Create(string jsonData)
         {
             return View();
         }
+        // POST:: api/SubmitOrcer
+        [HttpGet]
+        public IActionResult submitOrder(string jsonData) {
+            JObject json = JObject.Parse(jsonData);
 
+            foreach (var item in json)
+            {
+                Console.WriteLine("data ::: key ->{0} value->{1}", item.Key, item.Value);
+                JObject js = JObject.Parse(item.Value.ToString());
+
+                string productID = item.Key;
+                string productName = "";
+                string productAmount = "";
+                foreach (var i in js) {
+                    if (i.Key == "productName")
+                    {
+                        productName = i.Value.ToString();
+                    }
+                    if (i.Key == "productAmount")
+                    {
+                        productAmount = i.Value.ToString();
+                    }
+                }
+                Console.WriteLine(productName + " " + productAmount + " saved.");
+                Product p = new Product();
+                p.ProductName = productName + "blabla";
+                p.Amount = 999;
+                p.SupplierID = 1;
+                _context.Products.Add(p);
+                _context.SaveChanges();
+                Console.WriteLine("product saved !!");
+            }
+            Console.WriteLine("::::::::::::::::");
+            Console.WriteLine("SEAN IM HERE !!!");
+
+            
+            return Redirect("/Index");
+        }
         // POST: Products/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
