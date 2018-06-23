@@ -112,7 +112,6 @@ namespace StoreApp.Controllers
             registerUser.LastName = lastname;
             registerUser.UserName = username;
             registerUser.Password = password;
-            registerUser.Cart = null;
 
             _context.Users.Add(registerUser);
             await _context.SaveChangesAsync();

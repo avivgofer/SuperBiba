@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StoreApp.Data;
 
 namespace StoreApp.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    partial class StoreContextModelSnapshot : ModelSnapshot
+    [Migration("20180623212447_orderDetailsChanged")]
+    partial class orderDetailsChanged
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -23,11 +25,11 @@ namespace StoreApp.Migrations
                     b.Property<int>("OrderID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("OrderTime");
+                    b.Property<DateTime>("orderTime");
 
-                    b.Property<double>("Total");
+                    b.Property<double>("total");
 
-                    b.Property<string>("UserID");
+                    b.Property<string>("userID");
 
                     b.HasKey("OrderID");
 
@@ -47,13 +49,13 @@ namespace StoreApp.Migrations
 
                     b.Property<int?>("OrderDetailsOrderID");
 
-                    b.Property<double>("Price");
-
                     b.Property<string>("ProductName");
 
                     b.Property<string>("ProductType");
 
                     b.Property<int>("SupplierID");
+
+                    b.Property<double>("cost");
 
                     b.HasKey("ID");
 

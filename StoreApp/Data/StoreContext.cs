@@ -14,12 +14,12 @@ namespace StoreApp.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<OrderDetails> OrderDetails { get; set; }
-        public DbSet<StorageProducts> StorageProducts { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Supplier>().ToTable("Suppliers");
             modelBuilder.Entity<Product>().ToTable("Products");
             modelBuilder.Entity<User>().ToTable("Users");
+            modelBuilder.Entity<OrderDetails>().ToTable("OrderDetails");
         }
     }
 }

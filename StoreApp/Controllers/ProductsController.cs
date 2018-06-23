@@ -75,140 +75,7 @@ namespace StoreApp.Controllers
                           select s);
             return View(snacks.ToList());
         }
-        [Route("products/addToCart/{productID}/{user}")]
-        public ActionResult addToCart(int productID, string user)
 
-        {
-
-            if (productID > 0 && !String.IsNullOrEmpty(user))
-            {
-
-                var products = from p in _context.Products
-                               select p;
-
-                bool flag = false;
-                Product product = this.getProductFromDB(productID);
-                StorageProducts storage = (from s in _context.StorageProducts
-                                           where s.ProductName == product.ProductName
-                                           select s).SingleOrDefault<StorageProducts>();
-                storage.Amount--;
-
-                User us = (from u in _context.Users
-                           where u.UserName == user
-                           select u).SingleOrDefault<User>();
-                if (us != null)
-                {
-                    foreach (Product p in us.Cart)
-                    {
-                        if (p.ID == productID && p.Amount > 0)
-                        {
-                            p.Amount++;
-                            flag = true;
-                            _context.SaveChanges();
-                        }
-                    }
-                    if (!flag)
-                    {
-                        us.Cart.Add(product);
-                        _context.SaveChanges();
-                    }
-                }
-
-                return View(us.Cart.ToList());
-
-            }
-
-            return null;
-        }
-        [Route("products/removeFromCart/{productID}/{userName}")]
-        public ActionResult removeFromCart(int productID, string userName)
-        {
-            bool flag = false;
-            Product product = this.getProductFromDB(productID);
-
-            User user = (from u in _context.Users
-                         where u.UserName == userName
-                         select u).SingleOrDefault<User>();
-
-            StorageProducts storage = (from s in _context.StorageProducts
-                                       where s.ProductName == product.ProductName
-                                       select s).SingleOrDefault<StorageProducts>();
-            storage.Amount++;
-
-            _context.SaveChanges();
-            if (user != null)
-            {
-                foreach (Product p in user.Cart)
-                {
-                    if (p.ID == productID && p.Amount > 1)
-                    {
-                        p.Amount--;
-                        flag = true;
-                        _context.SaveChanges();
-                    }
-                }
-                if (!flag)
-                {
-                    user.Cart.Remove(product);
-                    _context.SaveChanges();
-                }
-
-                return View(user.Cart.ToList());
-            }
-            return BadRequest();
-        }
-
-
-
-        public double getTotalPrice(User user)
-        {
-            double total = 0;
-            if (user != null)
-            {
-                foreach (Product p in user.Cart)
-                {
-                    total += (p.Amount * p.cost);
-                }
-                return total;
-            }
-            return 0;
-        }
-        [Route("products/sendOrder/{userName}")]
-        public ActionResult sendOrder(string userName)
-        {
-
-            if (!String.IsNullOrEmpty(userName))
-            {
-                User user = (from u in _context.Users
-                             where u.UserName == userName
-                             select u).SingleOrDefault<User>();
-
-                OrderDetails ord = new OrderDetails();
-
-                ord.OrderID = orderId++;
-                ord.userName = user.UserName;
-                ord.orderTime = DateTime.Now;
-                ord.total = this.getTotalPrice(user);
-                _context.OrderDetails.Add(ord);
-                var order = (from o in _context.OrderDetails
-                             where o.OrderID == ord.OrderID
-                             select o).SingleOrDefault<OrderDetails>();
-
-                foreach (Product p in user.Cart.ToList())
-                {
-                    order.Cart.Add(p);
-                    p.Amount = 1;
-                    // user.Cart.Remove(p);
-
-                }
-                _context.SaveChanges();
-
-                return View();
-
-            }
-            return BadRequest();
-
-        }
         public Product getProductFromDB(int productID)
         {
             return (from p in _context.Products
@@ -225,13 +92,7 @@ namespace StoreApp.Controllers
             return View(order.Cart.ToList());
         }
         [Route("products/getCart/{userName}")]
-        public ActionResult getCart(string userName)
-        {
-            var user = (from u in _context.Users
-                        where u.UserName == userName
-                        select u).SingleOrDefault<User>();
-            return View(user.Cart.ToList());
-        }
+
         // GET: Products/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -255,42 +116,42 @@ namespace StoreApp.Controllers
         {
             return View();
         }
-        // POST:: api/SubmitOrcer
+        // GET:: api/SubmitOrcer
         [HttpGet]
         public IActionResult submitOrder(string jsonData) {
+            string username;
+            // convert stringJSON to objectJSON:
             JObject json = JObject.Parse(jsonData);
 
-            foreach (var item in json)
-            {
-                Console.WriteLine("data ::: key ->{0} value->{1}", item.Key, item.Value);
-                JObject js = JObject.Parse(item.Value.ToString());
+            foreach (var item in json) {
+                // if current item equals to username then dont try to drown deeper
+                var isUserField = false;
 
-                string productID = item.Key;
-                string productName = "";
-                string productAmount = "";
-                foreach (var i in js) {
-                    if (i.Key == "productName")
-                    {
-                        productName = i.Value.ToString();
-                    }
-                    if (i.Key == "productAmount")
-                    {
-                        productAmount = i.Value.ToString();
+                if (item.Key == "username") {
+                    username = item.Value.ToString();
+                    Console.WriteLine("Shopping cart belongs to: {0}, starting orderDetail ..", username);
+                    isUserField = true;
+                }
+            
+                if (isUserField == false) {
+                    // parsing product details ..           
+                    JObject product = JObject.Parse(item.Value.ToString());
+                    string productID = item.Key;
+                    string productName = "";
+                    string productAmount = "";
+
+                    foreach (var p in product) {
+
+                        if (p.Key == "productName") {
+                            productName = p.Value.ToString();
+                        }
+
+                        if (p.Key == "productAmount") {
+                            productAmount = p.Value.ToString();
+                        }
                     }
                 }
-                Console.WriteLine(productName + " " + productAmount + " saved.");
-                Product p = new Product();
-                p.ProductName = productName + "blabla";
-                p.Amount = 999;
-                p.SupplierID = 1;
-                _context.Products.Add(p);
-                _context.SaveChanges();
-                Console.WriteLine("product saved !!");
             }
-            Console.WriteLine("::::::::::::::::");
-            Console.WriteLine("SEAN IM HERE !!!");
-
-            
             return Redirect("/Index");
         }
         // POST: Products/Create
@@ -300,15 +161,6 @@ namespace StoreApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ID,SupplierID,Title,Amount,Type,Supplier")] Product product)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Products.Add(product);
-                StorageProducts storage = new StorageProducts(product.ID, product.ProductName, product.Supplier);
-                _context.StorageProducts.Add(storage);
-                _context.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
             ViewBag.SupplierId = new SelectList(_context.Suppliers, "ID", "CompanyName", product.SupplierID);
             return View(product);
         }

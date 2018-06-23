@@ -4,6 +4,7 @@
 }
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700" rel="stylesheet">
 <link rel="stylesheet" href="~/css/cart.css"> <!-- Resource style -->
+<link rel="stylesheet" href="~/css/buttons.css"> <!-- Resource style -->
 <style>
     ul {
         list-style-type: none;
@@ -42,7 +43,13 @@
                 </footer>
             </div>
         </div> <!-- .cd-cart -->
-        <button id="toggleMyCart">הצג/הסתר עגלה</button>
+        <button class="btn-special2" id="toggleMyCart">הצג/הסתר עגלה</button>
+        <div class="svg-wrapper">
+  <svg height="60" width="320" xmlns="http://www.w3.org/2000/svg">
+    <rect class="shape" height="60" width="320" />
+  </svg>
+   <div class="text">HOVER</div>
+</div>
     </div> <!-- cd-cart-container -->
 </div>
 
@@ -51,4 +58,3 @@
     if (!window.jQuery) document.write('<script src="js/jquery-3.0.0.min.js"><\/script>');
 </script>
 <script src="~/js/cart.js"></script> <!-- Resource CartJS -->
-<script src="~/js/main.js"></script> <!-- Resource jQuery -->

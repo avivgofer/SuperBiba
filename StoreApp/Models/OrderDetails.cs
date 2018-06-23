@@ -10,9 +10,9 @@ namespace StoreApp.Models
     {
         [Key]
         public int OrderID { get; set; }
-        public string userName { get; set; }
-        public DateTime orderTime { get; set; }
-        public double total { get; set; }
+        public string UserID { get; set; }
+        public DateTime OrderTime { get; set; }
+        public double Total { get; set; }
         public virtual ICollection<Product> Cart { get; set; }
     }
 }
