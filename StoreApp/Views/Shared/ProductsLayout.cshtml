@@ -2,20 +2,59 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700" rel="stylesheet">
-    <link rel="stylesheet" href="~/css/cart.css"> <!-- Resource style -->
-    <style>
-        ul {
-            list-style-type: none;
-        }
-    </style>
-    <div style="text-align : center">
-        <form action="">
-            <button class="ui blue button" style="font-size: 20px" formaction="/Products/Milky">חלב</button>
-            <button class="ui red button" style="font-size: 20px" formaction="/Products/Meat">בשר</button>
-            <button class="ui green button" style="font-size: 20px" formaction="/Products/Vegatable">ירקות</button>
-            <button class="ui gray button" style="font-size: 20px" formaction="/Products/General">כללי</button>
-        </form>
-        @RenderBody()
-    </div>
-    <script src="~/js/cart.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700" rel="stylesheet">
+<link rel="stylesheet" href="~/css/cart.css"> <!-- Resource style -->
+<link rel="stylesheet" href="~/css/buttons.css"> <!-- Resource style -->
+<style>
+    ul {
+        list-style-type: none;
+    }
+</style>
+
+<div style="text-align : center">
+    <form action="">
+        <button class="ui blue button" style="font-size: 20px" formaction="/Products/Milky">חלב</button>
+        <button class="ui red button" style="font-size: 20px" formaction="/Products/Meat">בשר</button>
+        <button class="ui green button" style="font-size: 20px" formaction="/Products/Vegatable">ירקות</button>
+        <button class="ui gray button" style="font-size: 20px" formaction="/Products/General">כללי</button>
+    </form>
+    @RenderBody()
+        <div class="cd-cart-container empty">
+        <a href="#0" class="cd-cart-trigger">
+            עגלה
+            <ul class="count">
+                <!-- cart items count -->
+                <li>0</li>
+                <li>0</li>
+            </ul> <!-- .count -->
+        </a>
+        <div class="cd-cart">
+            <div class="wrapper">
+                <header>
+                    <h2>עגלה:</h2>
+                    <span class="undo">המוצר הוסר . <a href="#0" style="padding-left:10px;">החזר!</a></span>
+                </header>
+
+                <div class="body">
+                    <ul></ul>
+                </div>
+                <footer>
+                    <a href="#0" class="checkout btn" style="font-size:16px;"<em>סיכום הזמנה :<span>0</span></em> ₪</a>
+                </footer>
+            </div>
+        </div> <!-- .cd-cart -->
+        <button class="btn-special2" id="toggleMyCart">הצג/הסתר עגלה</button>
+        <div class="svg-wrapper">
+  <svg height="60" width="320" xmlns="http://www.w3.org/2000/svg">
+    <rect class="shape" height="60" width="320" />
+  </svg>
+   <div class="text">HOVER</div>
+</div>
+    </div> <!-- cd-cart-container -->
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script>
+    if (!window.jQuery) document.write('<script src="js/jquery-3.0.0.min.js"><\/script>');
+</script>
+<script src="~/js/cart.js"></script> <!-- Resource CartJS -->
