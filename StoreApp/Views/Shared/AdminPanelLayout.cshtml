@@ -68,7 +68,7 @@
                 <a dir="rtl" class="navbar-brand" href="http://localhost:51220/home/index" style="right:0">החנות שלנו</a>
 
             </div>
-            <a class="pull-left" style="position: absolute; left: 10%;" href="#">חזרה לממשק מנהל</a>
+            <a class="pull-left" style="position: absolute; left: 10%;" href="http://localhost:51220/AdminPanel/Index">חזרה לממשק מנהל</a>
        
 
                 <!-- /.navbar-header -->
@@ -93,7 +93,7 @@
 
                 <div class="dropdown-menu">
                     <a class="dropdown-item" href="http://localhost:51220/AdminPanel/Products">טבלת מוצרים</a>
-                    <a class="dropdown-item" href="#">הוספת מוצר</a>
+                    <a class="dropdown-item" href="http://localhost:51220/AdminPanel/CreateProduct">הוספת מוצר</a>
                     <a class="dropdown-item" href="#">עידכון פרטי מוצר</a>
                     <a class="dropdown-item" href="#">מחיקת מוצר</a>
                 </div>
@@ -109,8 +109,8 @@
 
                     <br />
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">טבלת לקוחות</a>
-                        <a class="dropdown-item" href="#">הוספת לקוח</a>
+                        <a class="dropdown-item" href="http://localhost:51220/AdminPanel/Users">טבלת לקוחות</a>
+                        <a class="dropdown-item" href="http://localhost:51220/AdminPanel/CreateUser">הוספת לקוח</a>
                         <a class="dropdown-item" href="#">עידכון פרטי לקוח</a>
                         <a class="dropdown-item" href="#">מחיקת לקוח</a>
                     </div>
@@ -122,8 +122,8 @@
                         </button>
 
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">טבלת ספקים</a>
-                            <a class="dropdown-item" href="#">הוספת ספק</a>
+                            <a class="dropdown-item" href="http://localhost:51220/AdminPanel/Suppliers">טבלת ספקים</a>
+                            <a class="dropdown-item" href="http://localhost:51220/AdminPanel/CreateSupplier">הוספת ספק</a>
                             <a class="dropdown-item" href="#">עידכון פרטי ספק</a>
                             <a class="dropdown-item" href="#">מחיקת ספק</a>
                             <br>
@@ -141,10 +141,10 @@
 
                 <!-- /.panel -->
                 
-                <center class="col-xs-12 .col-sm-6 .col-lg-8">
+                <div class="col-xs-12 .col-sm-6 .col-lg-8">
                     @RenderBody()
                     <!-- /.panel-body -->
-                </center>
+                </div>
                
                 <!-- /.panel -->
             </div>

@@ -87,7 +87,7 @@ namespace StoreApp.Controllers
         // Get: AdminPanel/ConfirmedCreateUser
         public IActionResult ConfirmedCreateUser(int ID)
         {
-            //if (id == null)
+            //if (ID == null)
             //{
             //    return NotFound();
             //}
@@ -98,14 +98,12 @@ namespace StoreApp.Controllers
             //{
             //    return NotFound();
             //}
-            Debug.WriteLine("got : " + ID.ToString());
+
             User user = (from u in _context.Users
                        where u.ID == ID
                        select u).SingleOrDefault<User>();
             
-            Console.WriteLine("===========================");
-            Console.WriteLine("===========================");
-            
+           
             return View(user);
         }
 

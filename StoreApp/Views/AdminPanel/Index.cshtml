@@ -44,13 +44,15 @@
     <link href="~/assets/css/font-awesome/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--    WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
 
 </head>
 
@@ -223,10 +225,11 @@
 
                                 <b class="pull-right">
                                     הצגת מכירות בחתך ע"פ סוג מוצר
-</b>
-                                    <i class="fa fa-bar-chart-o fa-fw"></i>
+                                </b>
+                                <i class="fa fa-bar-chart-o fa-fw"></i>
+                                <div id="container" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+                                
 
-                                   
                             </div>
 
                             <!-- /.panel-heading -->
@@ -243,14 +246,68 @@
                                 <b class="pull-right">
                                     המוצרים האחרונים שנרכשו
                                 </b>
+                                    
+                                <script>
+                                    Highcharts.chart('container', {
+                                        chart: {
+                                            plotBackgroundColor: null,
+                                            plotBorderWidth: null,
+                                            plotShadow: false,
+                                            type: 'pie'
+                                        },
+                                        title: {
+                                            text: ''
+                                        },
+                                        tooltip: {
+                                            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                                        },
+                                        plotOptions: {
+                                            pie: {
+                                                allowPointSelect: true,
+                                                cursor: 'pointer',
+                                                dataLabels: {
+                                                    enabled: false
+                                                },
+                                                showInLegend: true
+                                            }
+                                        },
+                                        series: [{
+                                            name: '',
+                                            colorByPoint: true,
+                                            data: [
 
+                                                {
+                                                    name: 'משקאות',
+                                                    y: 61.41,
+                                                    sliced: true,
+                                                    selected: true
+                                                }, {
+                                                    name: 'חלב',
+                                                    y: 11.84
+                                                }, {
+                                                    name: 'בשר',
+                                                    y: 10.85
+                                                }, {
+                                                    name: 'ירקות',
+                                                    y: 4.67
+                                                }, {
+                                                    name: 'פירות',
+                                                    y: 4.18
+                                                }, {
+                                                    name: 'מוצרי ניקיון',
+                                                    y: 7.05
+                                                }]
+                                        }]
+                                    });</script>
                             </div>
                                
                             
                             <!-- /.panel-heading -->
                             <div class="panel-body">
                                 <div class="row">
+
                                     <div class="col-lg-12">
+
                                         <div class="table-responsive">
                                             <table class="table table-bordered table-hover table-striped">
                                                 <thead>
