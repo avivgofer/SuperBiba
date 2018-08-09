@@ -20,3 +20,14 @@ C:\Users\Eliran_Suisa\Desktop\WebApplications\2\StoreApp\StoreApp\bin\Debug\netc
 C:\Users\Eliran_Suisa\Desktop\WebApplications\2\StoreApp\StoreApp\bin\Debug\netcoreapp2.0\StoreApp.runtimeconfig.dev.json
 C:\Users\Eliran_Suisa\Desktop\WebApplications\2\StoreApp\StoreApp\bin\Debug\netcoreapp2.0\StoreApp.dll
 C:\Users\Eliran_Suisa\Desktop\WebApplications\2\StoreApp\StoreApp\bin\Debug\netcoreapp2.0\StoreApp.pdb
+C:\Users\User\Desktop\Dev\StoreApp\StoreApp\bin\Debug\netcoreapp2.0\StoreApp.deps.json
+C:\Users\User\Desktop\Dev\StoreApp\StoreApp\bin\Debug\netcoreapp2.0\StoreApp.runtimeconfig.json
+C:\Users\User\Desktop\Dev\StoreApp\StoreApp\bin\Debug\netcoreapp2.0\StoreApp.runtimeconfig.dev.json
+C:\Users\User\Desktop\Dev\StoreApp\StoreApp\bin\Debug\netcoreapp2.0\StoreApp.dll
+C:\Users\User\Desktop\Dev\StoreApp\StoreApp\bin\Debug\netcoreapp2.0\StoreApp.pdb
+C:\Users\User\Desktop\Dev\StoreApp\StoreApp\obj\Debug\netcoreapp2.0\StoreApp.csprojAssemblyReference.cache
+C:\Users\User\Desktop\Dev\StoreApp\StoreApp\obj\Debug\netcoreapp2.0\StoreApp.csproj.CoreCompileInputs.cache
+C:\Users\User\Desktop\Dev\StoreApp\StoreApp\obj\Debug\netcoreapp2.0\StoreApp.AssemblyInfoInputs.cache
+C:\Users\User\Desktop\Dev\StoreApp\StoreApp\obj\Debug\netcoreapp2.0\StoreApp.AssemblyInfo.cs
+C:\Users\User\Desktop\Dev\StoreApp\StoreApp\obj\Debug\netcoreapp2.0\StoreApp.dll
+C:\Users\User\Desktop\Dev\StoreApp\StoreApp\obj\Debug\netcoreapp2.0\StoreApp.pdb

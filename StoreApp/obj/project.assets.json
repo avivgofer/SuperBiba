@@ -13248,27 +13248,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Eliran_Suisa\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackagesFallback\\": {},
+    "C:\\Users\\User\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Eliran_Suisa\\Desktop\\WebApplications\\2\\StoreApp\\StoreApp\\StoreApp.csproj",
+      "projectUniqueName": "C:\\Users\\User\\Desktop\\Dev\\StoreApp\\StoreApp\\StoreApp.csproj",
       "projectName": "StoreApp",
-      "projectPath": "C:\\Users\\Eliran_Suisa\\Desktop\\WebApplications\\2\\StoreApp\\StoreApp\\StoreApp.csproj",
-      "packagesPath": "C:\\Users\\Eliran_Suisa\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Eliran_Suisa\\Desktop\\WebApplications\\2\\StoreApp\\StoreApp\\obj\\",
+      "projectPath": "C:\\Users\\User\\Desktop\\Dev\\StoreApp\\StoreApp\\StoreApp.csproj",
+      "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\User\\Desktop\\Dev\\StoreApp\\StoreApp\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackagesFallback\\",
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Eliran_Suisa\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.Fallback.config"
+        "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp2.0"
