@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
@@ -179,6 +180,37 @@ namespace StoreApp.Controllers
                 return NotFound();
             }
             return View(product);
+
+        }
+        public IActionResult searchByPriceAndType(String prodType,String min,String max)
+        {
+            int minim = Int32.Parse(min);
+            int maxim = Int32.Parse(max);
+            var products=(from p in _context.Products
+                          where (p.ProductType==prodType)&&(p.Price>=minim&&p.Price<=maxim)
+                          select p);
+
+            return View(products);
+        }
+
+        public IActionResult searchBySupplierTypeAndpartName(String supplierName,String  prodtype,String name)
+        {
+            Supplier sup = (from s in _context.Suppliers
+                            where s.CompanyName == supplierName
+                            select s).SingleOrDefault<Supplier>();
+
+            ICollection<Product> chosenProducts = new Collection<Product>();
+
+            foreach (Product p in sup.Products)
+            {
+                if (p.ProductType == prodtype && name.Contains(p.ProductName))
+                {
+                    chosenProducts.Add(p);
+                }
+            }
+
+
+            return View(chosenProducts.ToList());
         }
 
         // POST: Products/Edit/5
