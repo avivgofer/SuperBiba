@@ -120,7 +120,7 @@
                 <p>&copy; 2018 - StoreApp</p>
 
                 <div class="fb-like" data-href="https://www.facebook.com/Super-Biba-189918691714702/?modal=admin_todo_tour" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
-            
+               
             </footer>
         </div>
     </div>
@@ -128,7 +128,6 @@
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
     </environment>
     <environment exclude="Development">
@@ -144,7 +143,19 @@
                 crossorigin="anonymous"
                 integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
         </script>
-        <script src="~/js/site.min.js" asp-append-version="true"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        <script>
+            function gettingJSON() {
+                document.write("jquery loaded");
+                $.getJSON("http://api.openweathermap.org/data/2.5/weather?q=London&APPID=f857aa07f8ff97e1350f3a5594e027d8", function (json) {
+                    document.write(JSON.stringify(json));
+                });
+            }
+        </script>
+        
+       
+            
+            <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
     @RenderSection("Scripts", required: false)
 </body>
