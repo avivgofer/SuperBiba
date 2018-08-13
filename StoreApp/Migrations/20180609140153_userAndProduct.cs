@@ -41,7 +41,7 @@ namespace StoreApp.Migrations
                 nullable: true);
 
             migrationBuilder.AddColumn<double>(
-                name: "cost",
+                name: "Price",
                 table: "Products",
                 nullable: false,
                 defaultValue: 0.0);
@@ -58,7 +58,7 @@ namespace StoreApp.Migrations
                 table: "Products");
 
             migrationBuilder.DropColumn(
-                name: "cost",
+                name: "Price",
                 table: "Products");
 
             migrationBuilder.RenameColumn(

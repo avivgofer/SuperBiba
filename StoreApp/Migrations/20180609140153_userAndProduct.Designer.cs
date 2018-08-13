@@ -39,7 +39,7 @@ namespace StoreApp.Migrations
 
                     b.Property<int?>("UserID");
 
-                    b.Property<double>("cost");
+                    b.Property<double>("Price");
 
                     b.HasKey("ID");
 

@@ -73,140 +73,10 @@ namespace StoreApp.Controllers
                           select s);
             return View(snacks.ToList());
         }
-        [Route("products/addToCart/{productID}/{user}")]
-        public ActionResult addToCart(int productID, string user)
+       
 
-        {
-
-            if (productID > 0 && !String.IsNullOrEmpty(user))
-            {
-
-                var products = from p in _context.Products
-                               select p;
-
-                bool flag = false;
-                Product product = this.getProductFromDB(productID);
-                StorageProducts storage = (from s in _context.StorageProducts
-                                           where s.ProductName == product.ProductName
-                                           select s).SingleOrDefault<StorageProducts>();
-                storage.Amount--;
-
-                User us = (from u in _context.Users
-                           where u.UserName == user
-                           select u).SingleOrDefault<User>();
-                if (us != null)
-                {
-                    foreach (Product p in us.Cart)
-                    {
-                        if (p.ID == productID && p.Amount > 0)
-                        {
-                            p.Amount++;
-                            flag = true;
-                            _context.SaveChanges();
-                        }
-                    }
-                    if (!flag)
-                    {
-                        us.Cart.Add(product);
-                        _context.SaveChanges();
-                    }
-                }
-
-                return View(us.Cart.ToList());
-
-            }
-
-            return null;
-        }
-        [Route("products/removeFromCart/{productID}/{userName}")]
-        public ActionResult removeFromCart(int productID, string userName)
-        {
-            bool flag = false;
-            Product product = this.getProductFromDB(productID);
-
-            User user = (from u in _context.Users
-                         where u.UserName == userName
-                         select u).SingleOrDefault<User>();
-
-            StorageProducts storage = (from s in _context.StorageProducts
-                                       where s.ProductName == product.ProductName
-                                       select s).SingleOrDefault<StorageProducts>();
-            storage.Amount++;
-
-            _context.SaveChanges();
-            if (user != null)
-            {
-                foreach (Product p in user.Cart)
-                {
-                    if (p.ID == productID && p.Amount > 1)
-                    {
-                        p.Amount--;
-                        flag = true;
-                        _context.SaveChanges();
-                    }
-                }
-                if (!flag)
-                {
-                    user.Cart.Remove(product);
-                    _context.SaveChanges();
-                }
-
-                return View(user.Cart.ToList());
-            }
-            return BadRequest();
-        }
-
-
-
-        public double getTotalPrice(User user)
-        {
-            double total = 0;
-            if (user != null)
-            {
-                foreach (Product p in user.Cart)
-                {
-                    total += (p.Amount * p.cost);
-                }
-                return total;
-            }
-            return 0;
-        }
-        [Route("products/sendOrder/{userName}")]
-        public ActionResult sendOrder(string userName)
-        {
-
-            if (!String.IsNullOrEmpty(userName))
-            {
-                User user = (from u in _context.Users
-                             where u.UserName == userName
-                             select u).SingleOrDefault<User>();
-
-                OrderDetails ord = new OrderDetails();
-
-                ord.OrderID = orderId++;
-                ord.userName = user.UserName;
-                ord.orderTime = DateTime.Now;
-                ord.total = this.getTotalPrice(user);
-                _context.OrderDetails.Add(ord);
-                var order = (from o in _context.OrderDetails
-                             where o.OrderID == ord.OrderID
-                             select o).SingleOrDefault<OrderDetails>();
-
-                foreach (Product p in user.Cart.ToList())
-                {
-                    order.Cart.Add(p);
-                    p.Amount = 1;
-                    // user.Cart.Remove(p);
-
-                }
-                _context.SaveChanges();
-
-                return View();
-
-            }
-            return BadRequest();
-
-        }
+       
+      
         public Product getProductFromDB(int productID)
         {
             return (from p in _context.Products
@@ -222,14 +92,7 @@ namespace StoreApp.Controllers
 
             return View(order.Cart.ToList());
         }
-        [Route("products/getCart/{userName}")]
-        public ActionResult getCart(string userName)
-        {
-            var user = (from u in _context.Users
-                        where u.UserName == userName
-                        select u).SingleOrDefault<User>();
-            return View(user.Cart.ToList());
-        }
+        
         // GET: Products/Details/5
         public async Task<IActionResult> Details(int? id)
         {

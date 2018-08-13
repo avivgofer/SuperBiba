@@ -75,7 +75,7 @@ namespace StoreApp.Controllers
         // POST: AdminPanel/CreateProduct
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateProduct([Bind("ID,ProductName,Amount,ProductType,cost,ImageURL,Description,SupplierID")] Product product)
+        public async Task<IActionResult> CreateProduct([Bind("ID,ProductName,Amount,ProductType,Price,ImageURL,Description,SupplierID")] Product product)
         {
             if (ModelState.IsValid)
             {
@@ -123,7 +123,7 @@ namespace StoreApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditProduct(int id, [Bind("ID,ProductName,Amount,ProductType,cost,ImageURL,Description,SupplierID")] Product product)
+        public async Task<IActionResult> EditProduct(int id, [Bind("ID,ProductName,Amount,ProductType,Price,ImageURL,Description,SupplierID")] Product product)
         {
             if (id != product.ID)
             {
