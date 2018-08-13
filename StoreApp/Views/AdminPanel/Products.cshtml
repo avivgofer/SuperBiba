@@ -38,9 +38,7 @@
                 <th>
                     @Html.DisplayNameFor(model => model.SupplierID)
                 </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Supplier.CompanyName)
-                </th>
+               
                 <th></th>
             </tr>
         </thead>
@@ -72,13 +70,11 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.SupplierID)
                 </td>
+               
                 <td>
-                    @Html.DisplayFor(modelItem => item.Supplier.CompanyName)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.ID">ערוך פרטי מוצר</a> |
-                    <a asp-action="Details" asp-route-id="@item.ID">פרטי מוצר</a> |
-                    <a asp-action="Delete" asp-route-id="@item.ID">מחיקת מוצר</a>
+                    <a asp-action="EditProduct" asp-route-id="@item.ID">ערוך פרטי מוצר</a> |
+                    <a asp-action="ProductDetails" asp-route-id="@item.ID">פרטי מוצר</a> |
+                    <a asp-action="DeleteProduct" asp-route-id="@item.ID">מחיקת מוצר</a>
                 </td>
             </tr>
             }

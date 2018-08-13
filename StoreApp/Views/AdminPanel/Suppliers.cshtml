@@ -8,7 +8,7 @@
 <h2>רשימת ספקים</h2>
 
 <p>
-    <a asp-action="Create">הכנס ספק חדש</a>
+    <a asp-action="CreateSupplier">הכנס ספק חדש</a>
 </p>
 <table class="table">
     <thead>
@@ -38,9 +38,9 @@
                 @Html.DisplayFor(modelItem => item.Address)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">ערוך פרטי ספק</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">פרטי ספק</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">מחיקת ספק</a>
+                <a asp-action="EditSupplier" asp-route-id="@item.ID">ערוך פרטי ספק</a> |
+                <a asp-action="SupplierDetails" asp-route-id="@item.ID">פרטי ספק</a> |
+                <a asp-action="DeleteSupplier" asp-route-id="@item.ID">מחיקת ספק</a>
             </td>
         </tr>
 }

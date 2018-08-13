@@ -1,61 +1,60 @@
 ﻿@model StoreApp.Models.Product
 
 @{
-    ViewData["Title"] = "ConfirmedCreateProduct";
-    Layout = "~/Views/Shared/AdminPanelLayout.cshtml";
+    ViewData["Title"] = "Details";
 }
 
-<h2>הוכנס המוצר הבא:</h2>
-
+<h2>פרטי מוצר</h2>
 <div>
-    
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.ProductName)
+           שם המוצר
         </dt>
         <dd>
             @Html.DisplayFor(model => model.ProductName)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Amount)
+           כמות במלאי
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Amount)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.ProductType)
+           סוג מוצר
         </dt>
         <dd>
             @Html.DisplayFor(model => model.ProductType)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.cost)
+           מחיר ליחידה
         </dt>
         <dd>
             @Html.DisplayFor(model => model.cost)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.ImageURL)
+          תמונה מהקטלוג
         </dt>
         <dd>
             @Html.DisplayFor(model => model.ImageURL)
         </dd>
+
         <dt>
-            @Html.DisplayNameFor(model => model.Description)
+            תיאור מוצר
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Description)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Supplier)
+            מספר ספק
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Supplier.ID)
+            @Html.DisplayFor(model => model.SupplierID)
         </dd>
+       
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.ID">ערוך</a> |
-    <a asp-action="Index/products">חזרה לרשימת המוצרים</a>
+    <a asp-action="Edit" asp-route-id="@Model.ID">ערוך פרטי משתמש</a> |
+    <a asp-action="Index">חזרה לרשימת מוצרים</a>
 </div>

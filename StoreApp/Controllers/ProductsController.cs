@@ -259,12 +259,14 @@ namespace StoreApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,SupplierID,Title,Amount,Type,Supplier")] Product product)
+        public async Task<IActionResult> Create([Bind("ID,SupplierID,Title,Amount,Type")] Product product)
         {
             if (ModelState.IsValid)
             {
                 _context.Products.Add(product);
-                StorageProducts storage = new StorageProducts(product.ID, product.ProductName, product.Supplier);
+
+
+                StorageProducts storage = new StorageProducts(product.ID, product.ProductName);
                 _context.StorageProducts.Add(storage);
                 _context.SaveChanges();
                 return RedirectToAction("Index");

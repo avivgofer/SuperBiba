@@ -56,9 +56,9 @@
                 @Html.DisplayFor(modelItem => item.IsAdmin)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">ערוך פרטי משתמש</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">פרטי משתמש</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">מחיקת משתמש</a>
+                <a asp-action="EditUser" asp-route-id="@item.ID">ערוך פרטי משתמש</a> |
+                <a asp-action="UserDetails" asp-route-id="@item.ID">פרטי משתמש</a> |
+                <a asp-action="DeleteUser" asp-route-id="@item.ID">מחיקת משתמש</a>
             </td>
         </tr>
 }

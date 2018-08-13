@@ -1,56 +1,54 @@
 ﻿@model StoreApp.Models.User
-
 @{
-    ViewData["Title"] = "ConfirmedCreateUser";
-    Layout = "~/Views/Shared/AdminPanelLayout.cshtml";
-    var name = ViewBag.Message;
+    ViewData["Title"] = "Delete";
 }
-
-
-<h2>הכנסת משתמש בוצעה בהצלחה!</h2>
+<h2>מחיקת משתמש</h2>
+<h3>האם אתה בטוח שאתה מעוניין למחוק את המשתמש?</h3>
 <div>
-    <h4>פרטי המשתמש</h4>
+    <h4>User</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.FirstName)
+            שם פרטי:
         </dt>
         <dd>
             @Html.DisplayFor(model => model.FirstName)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.LastName)
+            שם משפחה:
         </dt>
         <dd>
             @Html.DisplayFor(model => model.LastName)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.UserName)
+            שם משתמש:
         </dt>
         <dd>
             @Html.DisplayFor(model => model.UserName)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Password)
+            סיסמא:
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Password)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Mail)
+            אי-מייל:
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Mail)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.IsAdmin)
+            האם מנהל:
         </dt>
         <dd>
             @Html.DisplayFor(model => model.IsAdmin)
         </dd>
     </dl>
-</div>
-<div>
-    @*<a asp-action="Edit" asp-route-id="@Model.ID">ערוך פרטי משתמש</a> |*@
-    <a asp-action="Adminpanel/Index">חזור לרשימת משתמשים</a>
+
+    <form asp-action="DeleteUser">
+        <input type="hidden" asp-for="ID" />
+        <input type="submit" value="מחק משתמש" class="btn btn-default" /> |
+        <a asp-action="Index">חזרה לרשימת משתמשים</a>
+    </form>
 </div>
