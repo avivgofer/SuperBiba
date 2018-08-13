@@ -10,8 +10,8 @@ using StoreApp.Data;
 namespace StoreApp.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    [Migration("20180609122222_imageurl-added")]
-    partial class imageurladded
+    [Migration("20180813181447_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,32 +20,70 @@ namespace StoreApp.Migrations
                 .HasAnnotation("ProductVersion", "2.1.0-rtm-30799")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("StoreApp.Models.OrderDetails", b =>
+                {
+                    b.Property<int>("OrderID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("OrderTime");
+
+                    b.Property<double>("Total");
+
+                    b.Property<int>("UserID");
+
+                    b.HasKey("OrderID");
+
+                    b.ToTable("OrderDetails");
+                });
+
             modelBuilder.Entity("StoreApp.Models.Product", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Amount");
+                    b.Property<int>("Amount");
 
-                    b.Property<string>("ImageUrl");
+                    b.Property<string>("Description");
 
-                    b.Property<string>("Supplier");
+                    b.Property<string>("ImageURL");
+
+                    b.Property<int?>("OrderDetailsOrderID");
+
+                    b.Property<double>("Price");
+
+                    b.Property<string>("ProductName");
+
+                    b.Property<string>("ProductType");
 
                     b.Property<int>("SupplierID");
 
-                    b.Property<string>("Title");
-
-                    b.Property<int?>("Type");
-
-                    b.Property<int?>("UserID");
-
                     b.HasKey("ID");
+
+                    b.HasIndex("OrderDetailsOrderID");
 
                     b.HasIndex("SupplierID");
 
-                    b.HasIndex("UserID");
-
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("StoreApp.Models.StorageProducts", b =>
+                {
+                    b.Property<int>("ProductID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("Amount");
+
+                    b.Property<DateTime>("LastOrder");
+
+                    b.Property<string>("ProductName");
+
+                    b.Property<int?>("SupplierID");
+
+                    b.HasKey("ProductID");
+
+                    b.HasIndex("SupplierID");
+
+                    b.ToTable("StorageProducts");
                 });
 
             modelBuilder.Entity("StoreApp.Models.Supplier", b =>
@@ -53,7 +91,7 @@ namespace StoreApp.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Catagory");
+                    b.Property<string>("Address");
 
                     b.Property<string>("CompanyName");
 
@@ -69,9 +107,9 @@ namespace StoreApp.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("BirthDay");
-
                     b.Property<string>("FirstName");
+
+                    b.Property<bool>("IsAdmin");
 
                     b.Property<string>("LastName");
 
@@ -88,14 +126,21 @@ namespace StoreApp.Migrations
 
             modelBuilder.Entity("StoreApp.Models.Product", b =>
                 {
-                    b.HasOne("StoreApp.Models.Supplier")
+                    b.HasOne("StoreApp.Models.OrderDetails")
+                        .WithMany("Cart")
+                        .HasForeignKey("OrderDetailsOrderID");
+
+                    b.HasOne("StoreApp.Models.Supplier", "Supplier")
                         .WithMany("Products")
                         .HasForeignKey("SupplierID")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
 
-                    b.HasOne("StoreApp.Models.User")
-                        .WithMany("Cart")
-                        .HasForeignKey("UserID");
+            modelBuilder.Entity("StoreApp.Models.StorageProducts", b =>
+                {
+                    b.HasOne("StoreApp.Models.Supplier", "Supplier")
+                        .WithMany()
+                        .HasForeignKey("SupplierID");
                 });
 #pragma warning restore 612, 618
         }

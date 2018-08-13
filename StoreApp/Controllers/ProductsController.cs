@@ -119,6 +119,7 @@ namespace StoreApp.Controllers
         // GET:: api/SubmitOrcer
         [HttpGet]
         public IActionResult submitOrder(string jsonData) {
+            double sum = 0;
             string username = "";
             // convert stringJSON to objectJSON:
             JObject json = JObject.Parse(jsonData);
@@ -155,11 +156,15 @@ namespace StoreApp.Controllers
                     var prod = (from o in _context.Products
                                     where o.ProductName == productName
                                     select o).FirstOrDefault();
-                    // casting:
+                    // casting
+                    double sumOfProduct = prod.Price * Int32.Parse(productAmount);
+                    sum += sumOfProduct;
                     Product pr = (Product)prod;
                     productsCollection.Add(pr);
                 }
             }
+
+            Console.WriteLine("finished.");
             var usr = (from usrs in _context.Users
                        where usrs.UserName == username
                        select usrs).FirstOrDefault();
@@ -169,9 +174,10 @@ namespace StoreApp.Controllers
 
             order.UserID = u.ID;
             order.Cart = productsCollection;
-            order.OrderTime = new DateTime();
-            order.Total = 0;
+            order.OrderTime =DateTime.Now;
+            order.Total = sum;
             _context.OrderDetails.Add(order);
+            _context.SaveChanges();
             return Redirect("/Index");
         }
         // POST: Products/Create

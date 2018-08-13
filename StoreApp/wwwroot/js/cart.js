@@ -83,7 +83,7 @@ function getUserNameFromCookie() {
     
     submitOrder.on('click', function (event) {
         event.preventDefault();
-        alert('הזמנה בוצעה בהצלחה, תודה.');
+        alert('ההזמנה בוצעה בהצלחה, תודה אח שלי' + getUserNameFromCookie());
         var jsonToServer = submitCart();
         console.log('---------------JSON FILE---------------->' + JSON.stringify(jsonToServer));
         var dataStringToServer = JSON.stringify(jsonToServer);

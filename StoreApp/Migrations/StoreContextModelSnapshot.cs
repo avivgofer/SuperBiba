@@ -23,11 +23,11 @@ namespace StoreApp.Migrations
                     b.Property<int>("OrderID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("orderTime");
+                    b.Property<DateTime>("OrderTime");
 
-                    b.Property<double>("total");
+                    b.Property<double>("Total");
 
-                    b.Property<string>("userName");
+                    b.Property<int>("UserID");
 
                     b.HasKey("OrderID");
 
@@ -47,23 +47,19 @@ namespace StoreApp.Migrations
 
                     b.Property<int?>("OrderDetailsOrderID");
 
+                    b.Property<double>("Price");
+
                     b.Property<string>("ProductName");
 
                     b.Property<string>("ProductType");
 
                     b.Property<int>("SupplierID");
 
-                    b.Property<int?>("UserID");
-
-                    b.Property<double>("Price");
-
                     b.HasKey("ID");
 
                     b.HasIndex("OrderDetailsOrderID");
 
                     b.HasIndex("SupplierID");
-
-                    b.HasIndex("UserID");
 
                     b.ToTable("Products");
                 });
@@ -136,10 +132,6 @@ namespace StoreApp.Migrations
                         .WithMany("Products")
                         .HasForeignKey("SupplierID")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("StoreApp.Models.User")
-                        .WithMany("Cart")
-                        .HasForeignKey("UserID");
                 });
 
             modelBuilder.Entity("StoreApp.Models.StorageProducts", b =>

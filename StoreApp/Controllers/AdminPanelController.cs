@@ -32,9 +32,6 @@ namespace StoreApp.Controllers
         public IActionResult Index()
         {
 
-
-            
-
             var products = (from p in _context.Products
                             where p.Amount == 0
                             select p);
