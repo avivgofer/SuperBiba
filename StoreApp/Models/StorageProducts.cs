@@ -8,17 +8,12 @@ namespace StoreApp.Models
 {
     public class StorageProducts
     {
-        private int iD;
-
         public StorageProducts() {  }
-
-     
-
-        public StorageProducts(int prodId, string productName)
+        public StorageProducts(int prodId, string productName, Supplier supplier)
         {
             this.ProductID = prodId;
             this.ProductName = productName;
-           
+            this.Supplier = supplier;
             this.Amount = 100;
             this.LastOrder = DateTime.Now;
         }
@@ -26,7 +21,7 @@ namespace StoreApp.Models
         public int ProductID { get; set; }
         public string ProductName { get; set; }
         public DateTime LastOrder { get; set; }
-    
+        public virtual Supplier Supplier { get; set; }
         public int Amount { get; set; }
     }
 }

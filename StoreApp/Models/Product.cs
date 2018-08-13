@@ -16,6 +16,6 @@ namespace StoreApp.Models
         public string ImageURL { get; set; }
         public string Description { get; set; }
         public int SupplierID { get; set; }
-      
+        public virtual Supplier Supplier { get; set; }
     }
 }

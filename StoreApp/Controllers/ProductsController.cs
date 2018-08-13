@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
 using StoreApp.Data;
 using StoreApp.Models;
 
@@ -73,10 +75,7 @@ namespace StoreApp.Controllers
                           select s);
             return View(snacks.ToList());
         }
-       
 
-       
-      
         public Product getProductFromDB(int productID)
         {
             return (from p in _context.Products
@@ -92,7 +91,8 @@ namespace StoreApp.Controllers
 
             return View(order.Cart.ToList());
         }
-        
+        [Route("products/getCart/{userName}")]
+
         // GET: Products/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -112,29 +112,75 @@ namespace StoreApp.Controllers
         }
 
         // GET: Products/Create
-        public IActionResult Create()
+        public IActionResult Create(string jsonData)
         {
             return View();
         }
+        // GET:: api/SubmitOrcer
+        [HttpGet]
+        public IActionResult submitOrder(string jsonData) {
+            string username = "";
+            // convert stringJSON to objectJSON:
+            JObject json = JObject.Parse(jsonData);
+            List<Product> productsCollection = new List<Product>();
 
+            foreach (var item in json) {
+                // if current item equals to username then dont try to drown deeper
+                var isUserField = false;
+
+                if (item.Key == "username") {
+                    username = item.Value.ToString();
+                    Console.WriteLine("Shopping cart belongs to: {0}, starting orderDetail ..", username);
+                    isUserField = true;
+                }
+            
+                if (isUserField == false) {
+                    // parsing product details ..           
+                    JObject product = JObject.Parse(item.Value.ToString());
+                    string productID = item.Key;
+                    string productName = "";
+                    string productAmount = "";
+
+                    foreach (var p in product) {
+
+                        if (p.Key == "productName") {
+                            productName = p.Value.ToString();
+                        }
+
+                        if (p.Key == "productAmount") {
+                            productAmount = p.Value.ToString();
+                        }
+                    }
+                    // select spesific product:
+                    var prod = (from o in _context.Products
+                                    where o.ProductName == productName
+                                    select o).FirstOrDefault();
+                    // casting:
+                    Product pr = (Product)prod;
+                    productsCollection.Add(pr);
+                }
+            }
+            var usr = (from usrs in _context.Users
+                       where usrs.UserName == username
+                       select usrs).FirstOrDefault();
+            OrderDetails order = new OrderDetails();
+            // casting:
+            User u = (User)usr;
+
+            order.UserID = u.ID;
+            order.Cart = productsCollection;
+            order.OrderTime = new DateTime();
+            order.Total = 0;
+            _context.OrderDetails.Add(order);
+            return Redirect("/Index");
+        }
         // POST: Products/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,SupplierID,Title,Amount,Type")] Product product)
+        public async Task<IActionResult> Create([Bind("ID,SupplierID,Title,Amount,Type,Supplier")] Product product)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Products.Add(product);
-
-
-                StorageProducts storage = new StorageProducts(product.ID, product.ProductName);
-                _context.StorageProducts.Add(storage);
-                _context.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
             ViewBag.SupplierId = new SelectList(_context.Suppliers, "ID", "CompanyName", product.SupplierID);
             return View(product);
         }
