@@ -31,3 +31,14 @@ C:\Users\User\Desktop\Dev\StoreApp\StoreApp\obj\Debug\netcoreapp2.0\StoreApp.Ass
 C:\Users\User\Desktop\Dev\StoreApp\StoreApp\obj\Debug\netcoreapp2.0\StoreApp.AssemblyInfo.cs
 C:\Users\User\Desktop\Dev\StoreApp\StoreApp\obj\Debug\netcoreapp2.0\StoreApp.dll
 C:\Users\User\Desktop\Dev\StoreApp\StoreApp\obj\Debug\netcoreapp2.0\StoreApp.pdb
+C:\Users\nikol\Desktop\GitProject\StoreApp\StoreApp\bin\Debug\netcoreapp2.0\StoreApp.deps.json
+C:\Users\nikol\Desktop\GitProject\StoreApp\StoreApp\bin\Debug\netcoreapp2.0\StoreApp.runtimeconfig.json
+C:\Users\nikol\Desktop\GitProject\StoreApp\StoreApp\bin\Debug\netcoreapp2.0\StoreApp.runtimeconfig.dev.json
+C:\Users\nikol\Desktop\GitProject\StoreApp\StoreApp\bin\Debug\netcoreapp2.0\StoreApp.dll
+C:\Users\nikol\Desktop\GitProject\StoreApp\StoreApp\bin\Debug\netcoreapp2.0\StoreApp.pdb
+C:\Users\nikol\Desktop\GitProject\StoreApp\StoreApp\obj\Debug\netcoreapp2.0\StoreApp.csprojAssemblyReference.cache
+C:\Users\nikol\Desktop\GitProject\StoreApp\StoreApp\obj\Debug\netcoreapp2.0\StoreApp.csproj.CoreCompileInputs.cache
+C:\Users\nikol\Desktop\GitProject\StoreApp\StoreApp\obj\Debug\netcoreapp2.0\StoreApp.AssemblyInfoInputs.cache
+C:\Users\nikol\Desktop\GitProject\StoreApp\StoreApp\obj\Debug\netcoreapp2.0\StoreApp.AssemblyInfo.cs
+C:\Users\nikol\Desktop\GitProject\StoreApp\StoreApp\obj\Debug\netcoreapp2.0\StoreApp.dll
+C:\Users\nikol\Desktop\GitProject\StoreApp\StoreApp\obj\Debug\netcoreapp2.0\StoreApp.pdb

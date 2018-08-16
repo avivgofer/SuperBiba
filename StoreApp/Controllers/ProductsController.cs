@@ -276,6 +276,68 @@ namespace StoreApp.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+        [HttpPost]
+        public List<Product> searchByPriceAndType(string productType, int min, int max)
+        {
+
+            List<Product> prods = new List<Product>();
+            //var certificate = from p in _context.Products
+            //                  select p;
+            List<Product> products = (from p in _context.Products
+                                      where (p.ProductType == productType) && (p.Price >= min && p.Price <= max)
+                                      select p).ToList<Product>();
+
+
+            foreach (Product p in products)
+            {
+                prods.Add(p);
+            }
+
+            return prods;
+            //searchByPriceAndType(prods);
+        }
+
+
+
+        [HttpPost]
+        public List<JsonResult> searchBySupplier(string supplierName, string prodtype, string partName)
+        {
+            int id = (from s in _context.Suppliers
+                      where s.CompanyName == supplierName
+                      select s.ID).SingleOrDefault<int>();
+
+            List<JsonResult> result = new List<JsonResult>();
+            var query = from sup in _context.Suppliers
+                        join prod in _context.Products on sup.ID equals prod.SupplierID
+                        where prod.SupplierID == sup.ID
+                        select new { Supplier = sup, Product = prod };
+
+
+            foreach (var item in query)
+            {
+                if (item.Supplier.CompanyName == supplierName && item.Product.ProductType == prodtype
+                     && item.Product.ProductName.Contains(partName))
+                {
+                    result.Add(Json(new { productName = item.Product.ProductName, price = item.Product.Price, type = item.Product.ProductType, supplierName = item.Supplier.CompanyName }));
+                }
+            }
+
+            //foreach(  in result)
+            //{
+            //    if(item.Prod)
+            //}
+
+
+            return result;
+
+        }
+
+        public IActionResult Search()
+        {
+            var supliers = from s in _context.Suppliers
+                           select s;
+            return View(supliers.ToList());
+        }
 
         private bool ProductExists(int id)
         {
