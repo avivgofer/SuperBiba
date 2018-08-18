@@ -45,8 +45,6 @@ namespace StoreApp.Migrations
 
                     b.Property<string>("ImageURL");
 
-                    b.Property<int?>("OrderDetailsOrderID");
-
                     b.Property<double>("Price");
 
                     b.Property<string>("ProductName");
@@ -56,8 +54,6 @@ namespace StoreApp.Migrations
                     b.Property<int>("SupplierID");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("OrderDetailsOrderID");
 
                     b.HasIndex("SupplierID");
 
@@ -122,12 +118,30 @@ namespace StoreApp.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("StoreApp.Models.UserProduct", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("Amount");
+
+                    b.Property<int?>("OrderDetailsOrderID");
+
+                    b.Property<double>("Price");
+
+                    b.Property<string>("ProductName");
+
+                    b.Property<string>("ProductType");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("OrderDetailsOrderID");
+
+                    b.ToTable("UserProduct");
+                });
+
             modelBuilder.Entity("StoreApp.Models.Product", b =>
                 {
-                    b.HasOne("StoreApp.Models.OrderDetails")
-                        .WithMany("Cart")
-                        .HasForeignKey("OrderDetailsOrderID");
-
                     b.HasOne("StoreApp.Models.Supplier", "Supplier")
                         .WithMany("Products")
                         .HasForeignKey("SupplierID")
@@ -139,6 +153,13 @@ namespace StoreApp.Migrations
                     b.HasOne("StoreApp.Models.Supplier", "Supplier")
                         .WithMany()
                         .HasForeignKey("SupplierID");
+                });
+
+            modelBuilder.Entity("StoreApp.Models.UserProduct", b =>
+                {
+                    b.HasOne("StoreApp.Models.OrderDetails")
+                        .WithMany("Cart")
+                        .HasForeignKey("OrderDetailsOrderID");
                 });
 #pragma warning restore 612, 618
         }

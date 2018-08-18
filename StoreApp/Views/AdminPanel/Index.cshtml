@@ -5,6 +5,11 @@
     Layout = null;
 
 }
+<style>
+    .trycss{
+        position:relative;
+    }
+</style>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,7 +31,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
     <!-- Bootstrap Core CSS -->
     <link href="~/assets/css/rtl/bootstrap.min.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
     <!-- not use this in ltr -->
     <link href="~/assets/css/rtl/bootstrap.rtl.css" rel="stylesheet">
 
@@ -35,6 +40,7 @@
 
     <!-- Timeline CSS -->
     <link href="~/assets/css/plugins/timeline.css" rel="stylesheet">
+
 
     <!-- Custom CSS -->
     <link href="~/assets/css/rtl/sb-admin-2.css" rel="stylesheet">
@@ -51,14 +57,20 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <!-- highcharts scrpits -->
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+
 
 </head>
 
 <body>
+    <!-- d3.js CSS -->
+    
+    <!-- d3.js scrpits -->
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
 
     <div id="wrapper">
 
@@ -94,8 +106,8 @@
                 <div class="dropdown-menu">
                     <a class="dropdown-item" href="http://localhost:51220/AdminPanel/Products">טבלת מוצרים</a>
                     <a class="dropdown-item" href="http://localhost:51220/AdminPanel/createProduct">הוספת מוצר</a>
-                    <a class="dropdown-item" href="#">עידכון פרטי מוצר</a>
-                    <a class="dropdown-item" href="#">מחיקת מוצר</a>
+                    <a class="dropdown-item" href="http://localhost:51220/AdminPanel/Products">עידכון פרטי מוצר</a>
+                    <a class="dropdown-item" href="http://localhost:51220/AdminPanel/Products">מחיקת מוצר</a>
                 </div>
 
                 <br>
@@ -105,14 +117,14 @@
                     <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                         לקוחות
                     </button>
-
+                    
 
                     <br />
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="http://localhost:51220/AdminPanel/Users">טבלת לקוחות</a>
                         <a class="dropdown-item" href="http://localhost:51220/AdminPanel/createUser">הוספת לקוח</a>
-                        <a class="dropdown-item" href="#">עידכון פרטי לקוח</a>
-                        <a class="dropdown-item" href="#">מחיקת לקוח</a>
+                        <a class="dropdown-item" href="http://localhost:51220/AdminPanel/Users">עידכון פרטי לקוח</a>
+                        <a class="dropdown-item" href="http://localhost:51220/AdminPanel/Users">מחיקת לקוח</a>
                     </div>
 
                     <br>
@@ -124,8 +136,8 @@
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="http://localhost:51220/AdminPanel/Suppliers">טבלת ספקים</a>
                             <a class="dropdown-item" href="http://localhost:51220/AdminPanel/createSupplier">הוספת ספק</a>
-                            <a class="dropdown-item" href="#">עידכון פרטי ספק</a>
-                            <a class="dropdown-item" href="#">מחיקת ספק</a>
+                            <a class="dropdown-item" href="http://localhost:51220/AdminPanel/Suppliers">עידכון פרטי ספק</a>
+                            <a class="dropdown-item" href="http://localhost:51220/AdminPanel/Suppliers">מחיקת ספק</a>
                             <br>
                         </div>
                     </div>
@@ -140,7 +152,7 @@
             <div dir="rtl" class="row">
                 <div dir="rtl" class="col-lg-12">
                     <div class="text-right">
-                        
+
                         <h1 dir="rtl" class="page-header">ממשק מנהל</h1>
                     </div>
                 </div>
@@ -154,21 +166,15 @@
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-4">
-                                    <i class="fa fa-tasks fa-5x text-center"></i>
+                                    <i class="zmdi zmdi-hc-5x zmdi-money"></i>
                                 </div>
                                 <div class="col-xs-6 text-md-center">
-                                    <div class="huge">12</div>
-                                    <div>משימות חדשות!</div>
+                                    <div class="huge">@ViewBag.totalEarns₪</div>
+                                    <div>כלל הרווחים באתר!</div>
                                 </div>
                             </div>
                         </div>
-                        <a href="#">
-                            <div class="panel-footer">
-                                <span class="text-sm-center">צפייה בפרטים</span>
-                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                <div class="clearfix"></div>
-                            </div>
-                        </a>
+
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-5">
@@ -179,18 +185,12 @@
                                     <i class="fa fa-shopping-cart fa-5x"></i>
                                 </div>
                                 <div class="col-xs-8 text-center">
-                                    <div class="huge">124</div>
-                                    <div>הזמנות חדשות!</div>
+                                    <div class="huge">@ViewBag.ordersNum</div>
+                                    <div>הזמנות שבוצעו בחנות!</div>
                                 </div>
                             </div>
                         </div>
-                        <a href="#">
-                            <div class="panel-footer">
-                                <span class="pull-left">צפייה בפרטים</span>
-                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                <div class="clearfix"></div>
-                            </div>
-                        </a>
+
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-5">
@@ -198,21 +198,16 @@
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-4">
-                                    <i class="fa fa-facebook fa-5x"></i>
+                                    <i class=" zmdi zmdi-hc-5x zmdi-account-circle"></i>
+
                                 </div>
                                 <div class="col-xs-8 text-center">
-                                    <div class="huge">13</div>
-                                    <div>משתמשים בדף ה-facebook!</div>
+                                    <div class="huge">@ViewBag.usersNum</div>
+                                    <div>משתמשים באתר!</div>
                                 </div>
                             </div>
                         </div>
-                        <a href="#">
-                            <div class="panel-footer">
-                                <span class="pull-left">צפייה בפרטים</span>
-                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                <div class="clearfix"></div>
-                            </div>
-                        </a>
+
                     </div>
                 </div>
             </div>
@@ -247,7 +242,7 @@
 
                             <i class="fa fa-bar-chart-o fa-fw"></i>
                             <b class="pull-right">
-                                המוצרים האחרונים שנרכשו
+                                המוצרים הנמכרים ביותר:
                             </b>
 
                             <script>
@@ -284,72 +279,39 @@
                                 });
                             </script>
                         </div>
-                        
+
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                             <div class="row">
-                                /
+
                                 <div class="col-lg-12">
 
                                     <div class="table-responsive">
                                         <table class="table table-bordered table-hover table-striped">
                                             <thead>
                                                 <tr>
-                                                    <th>שם המוצר</th>
-                                                    <th>תאריך רכישה</th>
-                                                    <th>שעת רכישה</th>
-                                                    <th>מחיר המוצר</th>
+
+                                                    <th>מספר לקוח</th>
+                                                    <th>שם משתמש</th>
+                                                    <th>שם פרטי</th>
+                                                    <th>שם משפחה</th>
+                                                    <th>סכום הזמנה כולל</th>
+
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>3326</td>
-                                                    <td>10/21/2013</td>
-                                                    <td>3:29 PM</td>
-                                                    <td>$321.33</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3325</td>
-                                                    <td>10/21/2013</td>
-                                                    <td>3:20 PM</td>
-                                                    <td>$234.34</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3324</td>
-                                                    <td>10/21/2013</td>
-                                                    <td>3:03 PM</td>
-                                                    <td>$724.17</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3323</td>
-                                                    <td>10/21/2013</td>
-                                                    <td>3:00 PM</td>
-                                                    <td>$23.71</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3322</td>
-                                                    <td>10/21/2013</td>
-                                                    <td>2:49 PM</td>
-                                                    <td>$8345.23</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3321</td>
-                                                    <td>10/21/2013</td>
-                                                    <td>2:23 PM</td>
-                                                    <td>$245.12</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3320</td>
-                                                    <td>10/21/2013</td>
-                                                    <td>2:15 PM</td>
-                                                    <td>$5663.54</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3319</td>
-                                                    <td>10/21/2013</td>
-                                                    <td>2:13 PM</td>
-                                                    <td>$943.45</td>
-                                                </tr>
+                                                @foreach (User user in ViewBag.users)
+                                                {
+                                                    <tr>
+
+                                                        <td>@user.ID</td>
+                                                        <td>@user.UserName</td>
+                                                        <td>@user.FirstName</td>
+                                                        <td>@user.LastName</td>
+                                                        <td>@(((Dictionary<int, double>)ViewBag.totalIds)[user.ID]) ₪</td>
+
+                                                    </tr>
+                                                }
                                             </tbody>
                                         </table>
                                     </div>
@@ -380,6 +342,7 @@
                             <i class="fa fa-warning fa-fw"></i>
                             <b class="pull-right">חוסרים במלאי </b>
                         </div>
+
                         <!-- /.panel-heading -->
                         <div class="table-responsive">
                             <table class="table table-bordered table-hover table-striped">
@@ -396,11 +359,11 @@
                                     @foreach (Product prod in ViewBag.missingProducts)
                                     {
 
-                                <tr>
-                                        <td>@prod.ProductName</td>
-                                        <td>@prod.Price</td>
-                                        <td>@prod.SupplierID</td>
-                                </tr>
+                                        <tr>
+                                            <td>@prod.ProductName</td>
+                                            <td>@prod.Price</td>
+                                            <td>@prod.SupplierID</td>
+                                        </tr>
 
                                     }
 
@@ -414,52 +377,21 @@
                 </div>
                 <!-- /.panel -->
                 <div class="col-lg-8">
+
                     <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <i class="fa fa-bar-chart-o fa-fw"></i>
-                            <span class="pull-right">הפנייה לפיצ'ר נוסף</span>
-                        </div>
-                        <div class="panel-body">
-                            <div id="morris-donut-chart"></div>
-                            <a href="#" class="btn btn-default btn-block">פרטים נוספים</a>
-                        </div>
+
+                        
+
                         <!-- /.panel-body -->
                     </div>
                     <!-- /.panel -->
                 </div>
-
-
-
             </div>
             <!-- /.panel-heading -->
-            <!-- /.panel-body -->
-            <!-- /.panel-footer -->
         </div>
         <!-- /.panel .chat-panel -->
     </div>
-    <!-- /.col-lg-4 -->
-    </div>
-    <!-- /.row -->
-    </div>
-    <!-- /#page-wrapper -->
-    </div>
-
-    <!-- /#wrapper -->
-    <!-- jQuery Version 1.11.0 -->
-    <script src="js/jquery-1.11.0.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
-
-    <!-- Metis Menu Plugin JavaScript -->
-    <script src="js/metisMenu/metisMenu.min.js"></script>
-
-    <!-- Morris Charts JavaScript -->
-    <script src="js/raphael/raphael.min.js"></script>
-    <script src="js/morris/morris.min.js"></script>
-
-    <!-- Custom Theme JavaScript -->
-    <script src="js/sb-admin-2.js"></script>
+    
 
 </body>
 

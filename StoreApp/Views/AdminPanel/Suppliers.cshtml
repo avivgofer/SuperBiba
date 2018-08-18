@@ -4,30 +4,53 @@
     ViewData["Title"] = "Suppliers";
     Layout = "~/Views/Shared/AdminPanelLayout.cshtml";
 }
-
+<style>
+    div {
+        text-align: right;
+    }
+</style>
+<head>
+    <script src="~/js/adminPanel/supplierSearch.js"></script>
+</head>
 <h2>רשימת ספקים</h2>
 
 <p>
     <a asp-action="CreateSupplier">הכנס ספק חדש</a>
 </p>
+<p>
+    <b>חיפוש ספק</b>
+    <br /><br />
+    <input id="supId" type="number" value="" />
+    <input type="submit" id="sup-search" value="שלח" />
+    <input type="hidden" id="len" value="0" />
+
+
+
+</p>
 <table class="table">
     <thead>
         <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.CompanyName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.PhoneNumber)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Address)
-                </th>
+            <th>
+                מספר ספק:
+            </th>
+            <th>
+                שם ספק:
+            </th>
+            <th>
+                טלפון ספק:
+            </th>
+            <th>
+               כתובת ספק:
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ID)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CompanyName)
             </td>
@@ -46,3 +69,15 @@
 }
     </tbody>
 </table>
+<div class="card">
+    <table class="table table-hover shopping-cart-wrap" id="productable">
+        <thead class="text-muted">
+            <tr id="col-1">
+                <th scope="col">מספר ספק </th>
+                <th scope="col">שם הספק</th>
+                <th scope="col">כתובת</th>
+                <th scope="col">מס' טלפון</th>
+            </tr>
+        </thead>
+    </table>
+</div>

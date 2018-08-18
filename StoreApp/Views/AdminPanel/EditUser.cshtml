@@ -2,6 +2,11 @@
 @{
     ViewData["Title"] = "Edit";
 }
+<style>
+    div {
+        text-align: right;
+    }
+</style>
 <h2>עריכת פרטי משתמש</h2>
 
 <hr />
@@ -50,7 +55,7 @@
     </div>
 </div>
 <div>
-    <a asp-action="Index">חזרה לרשימת משתמשים</a>
+    <a asp-action="users">חזרה לרשימת משתמשים</a>
 </div>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

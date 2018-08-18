@@ -1,9 +1,12 @@
 *{outline: none;margin:0;padding:0;}
 html, body {height: 100%;}
 
-.wrapButtons {
+.wrapButtons{
   height: 100%;
-  display: flex;
+  display: block;
+  margin-left:auto;
+  margin-right:auto;
+  width:50%;
   align-items: center;
   justify-content: center;
 }

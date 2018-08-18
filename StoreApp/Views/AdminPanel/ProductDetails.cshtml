@@ -3,7 +3,11 @@
 @{
     ViewData["Title"] = "Details";
 }
-
+<style>
+    div {
+        text-align: right;
+    }
+</style>
 <h2>פרטי מוצר</h2>
 <div>
     <hr />
@@ -55,6 +59,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.ID">ערוך פרטי משתמש</a> |
-    <a asp-action="Index">חזרה לרשימת מוצרים</a>
+    <a asp-action="EditProduct" asp-route-id="@Model.ID">ערוך פרטי משתמש</a> |
+    <a asp-action="products">חזרה לרשימת מוצרים</a>
 </div>

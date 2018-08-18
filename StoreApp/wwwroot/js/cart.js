@@ -83,13 +83,13 @@ function getUserNameFromCookie() {
     
     submitOrder.on('click', function (event) {
         event.preventDefault();
-        alert('ההזמנה בוצעה בהצלחה, תודה אח שלי' + getUserNameFromCookie());
+        console.log('sending: ')
         var jsonToServer = submitCart();
         console.log('---------------JSON FILE---------------->' + JSON.stringify(jsonToServer));
+        //alert('ההזמנה בוצעה בהצלחה, תודה אח שלי' + getUserNameFromCookie());
         var dataStringToServer = JSON.stringify(jsonToServer);
-        $.get("submitOrder", { jsonData: dataStringToServer });
+        $.get("http://localhost:51220/Products/submitOrder", { jsonData: dataStringToServer });
         
-        console.log('sent get request');
         productList = []; 
     })
 

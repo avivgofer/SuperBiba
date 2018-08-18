@@ -27,53 +27,70 @@ namespace StoreApp.Controllers
         {
             return View();
         }
-        [Route("products/Meat")]
-        public ActionResult Meat()
+        [Route("products/productPage/{productName}")]
+        public ActionResult productPage(String productName)
         {
             var meat = (from m in _context.Products
-                        where m.ProductType == "meat"
+                        where m.ProductName == productName
                         select m);
             return View(meat.ToList());
         }
-        [Route("products/Milky")]
-        public ActionResult Milky()
+        [Route("products/searchBySupplier")]
+        [HttpPost]
+        public List<JsonResult> searchBySupplier(string supplierName, string prodtype, string partName)
         {
-            var milky = (from m in _context.Products
-                         where m.ProductType == "milky"
-                         select m);
-            return View(milky.ToList());
+
+            int id = (from s in _context.Suppliers
+                      where s.CompanyName == supplierName
+                      select s.ID).SingleOrDefault<int>();
+
+            List<JsonResult> result = new List<JsonResult>();
+            var query = from sup in _context.Suppliers
+                        join prod in _context.Products on sup.ID equals prod.SupplierID
+                        where prod.SupplierID == sup.ID
+                        select new { Supplier = sup, Product = prod };
+
+
+            foreach (var item in query)
+            {
+
+                if (item.Supplier.CompanyName == supplierName && item.Product.ProductType == prodtype)
+                {
+                    if ((partName != null && item.Product.ProductName.Contains(partName)) || partName == null)
+                    {
+
+                        result.Add(Json(new { productName = item.Product.ProductName, price = item.Product.Price, type = item.Product.ProductType, supplierName = item.Supplier.CompanyName }));
+                    }
+                    else continue;
+
+                }
+
+
+            }
+
+            return result;
+
         }
-        [Route("products/General")]
-        public ActionResult General()
+
+        [Route("products/searchByPriceAndType")]
+        public List<Product> searchByPriceAndType(string productType, int min, int max)
         {
-            var general = (from g in _context.Products
-                           where g.ProductType == "general"
-                           select g);
-            return View(general.ToList());
-        }
-        [Route("products/Drinks")]
-        public ActionResult Drinks()
-        {
-            var drinks = (from d in _context.Products
-                          where d.ProductType == "drinks"
-                          select d);
-            return View(drinks.ToList());
-        }
-        [Route("products/vegatable")]
-        public ActionResult vegatable()
-        {
-            var vegatable = (from v in _context.Products
-                             where v.ProductType == "vegatable"
-                             select v);
-            return View(vegatable.ToList());
-        }
-        [Route("products/snacks")]
-        public ActionResult snacks()
-        {
-            var snacks = (from s in _context.Products
-                          where s.ProductType == "snacks"
-                          select s);
-            return View(snacks.ToList());
+
+
+                if (max == 0)
+            {
+                max = 1000;
+            }
+
+            List<Product> products = new List<Product>();
+
+
+            products = (from p in _context.Products
+                        where (p.ProductType == productType) && (p.Price >= min && p.Price <= max)
+                        select p).ToList<Product>();
+
+            return products;
+
         }
 
         public Product getProductFromDB(int productID)
@@ -82,199 +99,134 @@ namespace StoreApp.Controllers
                     where p.ID == productID
                     select p).SingleOrDefault<Product>();
         }
-        [Route("products/getOrder/{orderID}")]
-        public ActionResult getOrder(int orderID)
-        {
-            var order = (from o in _context.OrderDetails
-                         where o.OrderID == orderID
-                         select o).SingleOrDefault<OrderDetails>();
 
-            return View(order.Cart.ToList());
-        }
-        [Route("products/getCart/{userName}")]
-
-        // GET: Products/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var product = await _context.Products
-                .SingleOrDefaultAsync(m => m.ID == id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-
-            return View(product);
-        }
-
-        // GET: Products/Create
-        public IActionResult Create(string jsonData)
-        {
-            return View();
-        }
         // GET:: api/SubmitOrcer
+        [Route("products/submitOrder")]
         [HttpGet]
-        public IActionResult submitOrder(string jsonData) {
+        public IActionResult submitOrder(string jsonData)
+        {
             double sum = 0;
             string username = "";
             // convert stringJSON to objectJSON:
             JObject json = JObject.Parse(jsonData);
             List<Product> productsCollection = new List<Product>();
 
-            foreach (var item in json) {
+            foreach (var item in json)
+            {
                 // if current item equals to username then dont try to drown deeper
                 var isUserField = false;
 
-                if (item.Key == "username") {
+                if (item.Key == "username")
+                {
                     username = item.Value.ToString();
                     Console.WriteLine("Shopping cart belongs to: {0}, starting orderDetail ..", username);
                     isUserField = true;
                 }
-            
-                if (isUserField == false) {
+
+                if (isUserField == false)
+                {
                     // parsing product details ..           
                     JObject product = JObject.Parse(item.Value.ToString());
                     string productID = item.Key;
                     string productName = "";
                     string productAmount = "";
 
-                    foreach (var p in product) {
+                    foreach (var p in product)
+                    {
 
-                        if (p.Key == "productName") {
+                        if (p.Key == "productName")
+                        {
                             productName = p.Value.ToString();
                         }
 
-                        if (p.Key == "productAmount") {
+                        if (p.Key == "productAmount")
+                        {
                             productAmount = p.Value.ToString();
                         }
                     }
                     // select spesific product:
-                    var prod = (from o in _context.Products
+                    Product prod = (from o in _context.Products
                                     where o.ProductName == productName
                                     select o).FirstOrDefault();
                     // casting
                     double sumOfProduct = prod.Price * Int32.Parse(productAmount);
                     sum += sumOfProduct;
-                    Product pr = (Product)prod;
-                    productsCollection.Add(pr);
+
+                    Product myProduct = prod;
+                    myProduct.Amount = Int32.Parse(productAmount);
+                    productsCollection.Add(myProduct);
                 }
             }
 
-            Console.WriteLine("finished.");
-            var usr = (from usrs in _context.Users
-                       where usrs.UserName == username
-                       select usrs).FirstOrDefault();
-            OrderDetails order = new OrderDetails();
-            // casting:
-            User u = (User)usr;
+            User usr = (from usrs in _context.Users
+                        where usrs.UserName == username
+                        select usrs).FirstOrDefault();
 
-            order.UserID = u.ID;
-            order.Cart = productsCollection;
-            order.OrderTime =DateTime.Now;
+
+            OrderDetails order = new OrderDetails();
+
+            order.UserID = usr.ID;
+            //order.Cart = new HashSet<UserProduct>();
+
+            foreach (Product p in productsCollection)
+            {
+                UserProduct product = new UserProduct();
+                product.Amount = p.Amount;
+                product.ProductName = p.ProductName;
+                product.ProductType = p.ProductType;
+                product.Price = p.Price;
+                order.Cart.Add(product);
+            }
+            order.OrderTime = DateTime.Now;
+
             order.Total = sum;
             _context.OrderDetails.Add(order);
+
             _context.SaveChanges();
+            var id = order.OrderID;
+            OrderDetails orderDetails3 = _context.OrderDetails
+              .Where(ood => ood.OrderID == id)
+              .Include("Cart")
+              .FirstOrDefault();
             return Redirect("/Index");
         }
-        // POST: Products/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,SupplierID,Title,Amount,Type,Supplier")] Product product)
+
+        [Route("products/Search")]
+        public ActionResult Search()
         {
-            ViewBag.SupplierId = new SelectList(_context.Suppliers, "ID", "CompanyName", product.SupplierID);
-            return View(product);
+            var supliers = from s in _context.Suppliers
+                           select s;
+            return View(supliers.ToList());
         }
 
-        // GET: Products/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
+        [Route("products/{productType}")]
+        public ActionResult Products(String productType)
+        { 
+            Double Num;
+            if (double.TryParse(productType, out Num))
             {
-                return NotFound();
+                var itemRange = (from m in _context.Products
+                                 where m.Price <= Convert.ToDouble(productType)
+                                 select m);
+                return View(itemRange.ToList());
             }
+            if (productType == "index")
+            {
+                var items = (from m in _context.Products
+                             select m);
+                return View(items.ToList());
+            }
+            var item = (from m in _context.Products
+                        where m.ProductType == productType
+                        select m);
+            return View(item.ToList());
 
-            var product = await _context.Products.SingleOrDefaultAsync(m => m.ID == id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-            return View(product);
+
         }
 
-        // POST: Products/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,SupplierID,Title,Amount,Type,Supplier")] Product product)
-        {
-            if (id != product.ID)
-            {
-                return NotFound();
-            }
+        
+        
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(product);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ProductExists(product.ID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(product);
-        }
-
-        // GET: Products/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var product = await _context.Products
-                .SingleOrDefaultAsync(m => m.ID == id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-
-            return View(product);
-        }
-
-        // POST: Products/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var product = await _context.Products.SingleOrDefaultAsync(m => m.ID == id);
-            _context.Products.Remove(product);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        private bool ProductExists(int id)
-        {
-            return _context.Products.Any(e => e.ID == id);
-        }
         
     }
 }

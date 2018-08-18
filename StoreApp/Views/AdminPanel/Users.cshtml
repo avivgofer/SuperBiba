@@ -5,38 +5,77 @@
     Layout = "~/Views/Shared/AdminPanelLayout.cshtml";
 }
 
+<head>
+    <script src="~/js/adminPanel/UserSearch.js"></script>
+</head>
+<style>
+    div {
+        text-align: right;
+    }
+</style>
 <h2>טבלת משתמשים</h2>
 
 <p>
     <a asp-action="CreateUser">הוסף משתמש חדש</a>
 </p>
+<p>
+    <b>חיפוש משתמש</b>
+    <br /><br />
+    <input id="userId" type="number" value="" />
+    <input type="submit" id="usr-search" value="שלח" />
+    <input type="hidden" id="len" value="0" />
+
+
+
+</p>
+<p>
+    <b>חיפוש מתקדם עפ"י ID ותאריך הזמנה</b>
+</p>
+<p>
+    <label for="userId"><b>מס' משתמש:</b></label>
+    <input type="number" id="userId" value="" />
+    <br />
+    <br />
+    <label for="begin"><b>:תאריך התחלה</b></label>
+    <input type="date" id="begin" value="" />
+    <br />
+    <br />
+    <label for="end"><b>:תאריך סיום</b></label>
+    <input type="date" id="end" value="" />
+</p>
 <table class="table">
     <thead>
         <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.FirstName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.LastName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.UserName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Password)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Mail)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.IsAdmin)
-                </th>
+            <th>
+                מספר משתמש:
+            </th>
+            <th>
+                שם פרטי:
+            </th>
+            <th>
+                שם משפחה:
+            </th>
+            <th>
+                שם משתמש:
+            </th>
+            <th>
+                סיסמא:
+            </th>
+            <th>
+                אי-מייל:
+            </th>
+            <th>
+                מנהל:
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ID)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.FirstName)
             </td>
@@ -63,4 +102,20 @@
         </tr>
 }
     </tbody>
-</table>
+ </table>
+<br />
+<br />
+
+<div class="card">
+    <table class="table table-hover shopping-cart-wrap" id="productable">
+        <thead class="text-muted">
+            <tr id="col-1">
+                <th scope="col">User ID</th>
+                <th scope="col">User Name</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">E-mail</th>
+            </tr>
+        </thead>
+    </table>
+</div>

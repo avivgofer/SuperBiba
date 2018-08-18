@@ -13,6 +13,6 @@ namespace StoreApp.Models
         public int UserID { get; set; }
         public DateTime OrderTime { get; set; }
         public double Total { get; set; }
-        public virtual ICollection<Product> Cart { get; set; }
+        public virtual ICollection<UserProduct> Cart { get; } = new List<UserProduct>();
     }
 }

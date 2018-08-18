@@ -2,10 +2,14 @@
 @{
     ViewData["Title"] = "Delete";
 }
+<style>
+    div {
+        text-align: right;
+    }
+</style>
 <h2>מחיקת מוצר</h2>
 <h3>האם אתה בטוח שאתה מעוניין למחוק את המוצר?</h3>
 <div>
-    <h4>Product</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -62,6 +66,6 @@
     <form asp-action="DeleteProduct">
         <input type="hidden" asp-for="ID" />
         <input type="submit" value="מחק מוצר" class="btn btn-default" /> |
-        <a asp-action="Index">חזרה לרשימת מוצרים</a>
+        <a asp-action="products">חזרה לרשימת מוצרים</a>
     </form>
 </div>

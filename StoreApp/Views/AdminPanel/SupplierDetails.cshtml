@@ -3,6 +3,11 @@
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<style>
+    div {
+        text-align: right;
+    }
+</style>
 <h2>Details</h2>
 <div>
     <h4>ספק</h4>
@@ -37,5 +42,5 @@
 </div>
 <div>
     <a asp-action="EditSupplier" asp-route-id="@Model.ID">ערוך פרטי ספק</a> |
-    <a asp-action="Index">חזור לרשימת ספקים</a>
+    <a asp-action="suppliers">חזור לרשימת ספקים</a>
 </div>

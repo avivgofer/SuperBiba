@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Server.Kestrel.Internal.System.Collections.Sequences;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using StoreApp.Data;
 using StoreApp.Models;
 
@@ -29,8 +32,78 @@ namespace StoreApp.Controllers
             _context = context;
         }
 
+        public double calcCart(List<Product> cart) {
+
+            double sum = 0;
+
+            foreach (Product p in cart) {
+                sum += p.Price;
+            }
+
+            return sum;
+        }
+
+        public double calcEarns() {
+            double totalEarns=0;
+            var order = (from ord in _context.OrderDetails 
+                         select ord);
+
+
+            foreach (OrderDetails o in order)
+            {
+                totalEarns += o.Total;
+            }
+                   
+            return totalEarns;
+        }
+
         public IActionResult Index()
         {
+            Dictionary<int, double> IdSellsHashMap = new Dictionary<int, double>();
+
+            foreach (OrderDetails o in _context.OrderDetails)
+            {
+                if (IdSellsHashMap.ContainsKey(o.UserID))
+                {
+                    if (o.Total > IdSellsHashMap[o.UserID])
+                    {
+                        IdSellsHashMap[o.UserID] = o.Total;
+                    }
+                
+                } else
+                {
+                    IdSellsHashMap[o.UserID] = o.Total;
+                }
+            }
+
+
+            //remember! topProducts is KeyValuePairs List
+
+            List<User> newUsers = new List<User>();
+            var pairsTotalId = IdSellsHashMap.OrderBy(pair => pair.Value).Take(5).ToList();
+            pairsTotalId.OrderByDescending(pair => pair.Value);
+            foreach(KeyValuePair<int, double> Kv in pairsTotalId)
+            {
+                User u = (from usrs in _context.Users
+                          where usrs.ID == Kv.Key
+                          select usrs).SingleOrDefault();
+
+                newUsers.Add(u);
+            }
+
+            ViewBag.totalIds = IdSellsHashMap;
+            ViewBag.users = newUsers;
+            ViewBag.totalEarns = calcEarns();
+
+            var orders = (from o in _context.OrderDetails
+                         select o);
+            ViewBag.ordersNum = orders.Count();
+
+            var users = (from u in _context.Users
+                            select u);
+            ViewBag.usersNum = users.Count();
+
+
 
             var products = (from p in _context.Products
                             where p.Amount == 0
@@ -50,8 +123,10 @@ namespace StoreApp.Controllers
             {
                 str += "{name:'"+item.name+"',y:"+item.count+"},";
             }
-
-           str = str.Remove(str.Length-1);
+           if (str.Length > 0)
+            {
+                str = str.Remove(str.Length-1);
+            }
             ViewBag.productType = str;
             return View();
         }
@@ -148,6 +223,42 @@ namespace StoreApp.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(product);
+        }
+
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public string AuthUser(string user)
+        {
+            JObject json = JObject.Parse(user);
+            string username = "";
+            string password = "";
+            foreach (var field in json)
+            {
+                if (field.Key == "username")
+                {
+                    username = field.Value.ToString();
+                }
+                if (field.Key == "password")
+                {
+                    password = field.Value.ToString();
+                }
+            }
+            User userVerified = (from users in _context.Users
+                                 where users.UserName == username && users.Password == password && users.IsAdmin == true
+                                 select users).FirstOrDefault();
+            if (userVerified != null)
+            {
+                return "true";
+            }
+            else
+            {
+                return "false";
+            }
         }
 
         // GET:  AdminPanel/Products/DeleteProduct/5
@@ -449,6 +560,97 @@ namespace StoreApp.Controllers
         }
 
 
+        [HttpPost]
+        public List<JsonResult> searchByUser(int userId, DateTime begin, DateTime end)
+        {
 
+            var query = from ord in _context.OrderDetails
+                        join usr in _context.Users on ord.UserID equals usr.ID
+                        where usr.ID == ord.UserID
+                        select new { User = usr, OrderDetails = ord };
+
+            int beg = begin.DayOfYear;
+            int e = end.DayOfYear;
+            List<JsonResult> result = new List<JsonResult>();
+
+            foreach (var item in query)
+            {
+                if (item.OrderDetails.UserID.Equals(userId))
+                {
+                    if (item.OrderDetails.OrderTime.DayOfYear >= beg && item.OrderDetails.OrderTime.DayOfYear <= e)
+                    {
+
+                        result.Add(Json(new { orderID = item.OrderDetails.OrderID, firsName = item.User.FirstName, lastName = item.User.LastName, date = item.OrderDetails.OrderTime, total = item.OrderDetails.Total, numOfproducts = item.OrderDetails.Cart.Count() }));
+
+                    }
+                }
+            }
+
+
+
+
+
+            return result;
+
+        }
+        [HttpPost]
+        public JsonResult userSearch(int usrId)
+        {
+            User query = (from u in _context.Users
+                          where u.ID == usrId
+                          select u).SingleOrDefault<User>();
+
+           return (Json(new {userID=query.ID,userName=query.UserName,firstName=query.FirstName
+              ,lastName=query.LastName ,email=query.Mail, }));
+
+           
+        }
+
+        [HttpPost]
+        public JsonResult prodSearch(int prodId)
+        {
+            Product query = (from p in _context.Products
+                          where p.ID == prodId
+                          select p).SingleOrDefault<Product>();
+
+            return (Json(new
+            {
+
+                prodID = query.ID,
+                productName = query.ProductName,
+                productType = query.ProductType,
+                productAmount = query.Amount,
+                productPrice = query.Price,
+                productDescription = query.Description,
+                supplierId = query.SupplierID
+                
+            }));
+
+
+        }
+
+        [HttpPost]
+        public JsonResult supplierSearch(int supId)
+        {
+            Supplier query = (from s in _context.Suppliers
+                             where s.ID == supId
+                             select s).SingleOrDefault<Supplier>();
+
+            return (Json(new
+            {
+
+                id = query.ID,
+                companyName = query.CompanyName,
+                address=query.Address,
+                phoneNumber = query.PhoneNumber
+               
+
+            }));
+
+
+        }
     }
+ 
+
+   
 }

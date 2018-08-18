@@ -2,10 +2,14 @@
 @{
     ViewData["Title"] = "Delete";
 }
+<style>
+    div {
+        text-align: right;
+    }
+</style>
 <h2>מחיקת משתמש</h2>
 <h3>האם אתה בטוח שאתה מעוניין למחוק את המשתמש?</h3>
 <div>
-    <h4>User</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -49,6 +53,6 @@
     <form asp-action="DeleteUser">
         <input type="hidden" asp-for="ID" />
         <input type="submit" value="מחק משתמש" class="btn btn-default" /> |
-        <a asp-action="Index">חזרה לרשימת משתמשים</a>
+        <a asp-action="users">חזרה לרשימת משתמשים</a>
     </form>
 </div>
