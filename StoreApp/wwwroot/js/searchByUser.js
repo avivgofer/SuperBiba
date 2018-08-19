@@ -1,6 +1,6 @@
 ﻿$(document).ready(function () {
 
-	$("#btn-search3").click(function () {
+	$("#btn-search2").click(function () {
 		console.log('here');
 		var userId = $("#userId").val();
 		console.log(userId);

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using StoreApp.Data;
 using StoreApp.Models;
@@ -67,6 +68,45 @@ namespace StoreApp.Controllers
 
 
             }
+
+            return result;
+
+        }
+
+        [Route("products/searchBySupplier2")]
+        [HttpPost]
+        public List<JsonResult> searchBySupplier2(string address, string phone, string name)
+        {
+            bool flag = false;
+            int id = (from s in _context.Suppliers
+                      where s.Address == address
+                      select s.ID).SingleOrDefault<int>();
+
+            List<JsonResult> result = new List<JsonResult>();
+            var query = from sup in _context.Suppliers
+                        join prod in _context.Products on sup.ID equals prod.SupplierID
+                        where prod.SupplierID == sup.ID
+                        select new { Supplier = sup, Product = prod };
+
+
+            foreach (var item in query)
+            {
+
+                if (item.Supplier.Address == address && item.Supplier.PhoneNumber == phone)
+                {
+                    if ((name != null && item.Product.ProductName.Contains(name)))
+                    {
+                     
+                        result.Add(Json(new { comapnyName = item.Supplier.CompanyName,product=item.Product.ProductName, phone=item.Supplier.PhoneNumber,address = item.Supplier.Address, productName = item.Product.ProductName, exsist = true }));
+                    }
+                    else continue;
+
+                }
+
+
+            }
+
+            
 
             return result;
 
@@ -167,6 +207,7 @@ namespace StoreApp.Controllers
 
             order.UserID = usr.ID;
             //order.Cart = new HashSet<UserProduct>();
+            List<UserProduct> productToSave = new List<UserProduct>();
 
             foreach (Product p in productsCollection)
             {
@@ -176,6 +217,7 @@ namespace StoreApp.Controllers
                 product.ProductType = p.ProductType;
                 product.Price = p.Price;
                 order.Cart.Add(product);
+                productToSave.Add(product);
             }
             order.OrderTime = DateTime.Now;
 
@@ -184,10 +226,24 @@ namespace StoreApp.Controllers
 
             _context.SaveChanges();
             var id = order.OrderID;
+
             OrderDetails orderDetails3 = _context.OrderDetails
               .Where(ood => ood.OrderID == id)
               .Include("Cart")
               .FirstOrDefault();
+
+            JsonModel js = new JsonModel();
+            js.sum = sum;
+            js.userId = orderDetails3.UserID;
+            js.username = username;
+            js.products = productToSave;
+            js.orderId = id;
+
+            List<JsonModel> _data = new List<JsonModel>();
+            _data.Add(js);
+            string saveOrder = JsonConvert.SerializeObject(_data.ToArray());
+            System.IO.File.WriteAllText(@"C:\Users\Eliran_Suisa\Desktop\WebApplications\2\StoreApp\wwwroot\orders\" + id.ToString() + ".json", saveOrder);
+
             return Redirect("/Index");
         }
 

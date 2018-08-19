@@ -89,7 +89,21 @@ function getUserNameFromCookie() {
         //alert('ההזמנה בוצעה בהצלחה, תודה אח שלי' + getUserNameFromCookie());
         var dataStringToServer = JSON.stringify(jsonToServer);
         $.get("http://localhost:51220/Products/submitOrder", { jsonData: dataStringToServer });
-        
+        var d = {
+            api_key: 'e01dc417',
+            api_secret: 'gfallg6tBRplY1G6',
+            to: '972503673664',
+            from: "NEXMO",
+            text: `New order recieved from: ${getUserNameFromCookie()}.`
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "https://rest.nexmo.com/sms/json",
+            data: d
+        });
+
+        alert("ההזמנה נקלטה במערכת. תודה");
         productList = []; 
     })
 

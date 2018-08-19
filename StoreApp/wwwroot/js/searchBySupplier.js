@@ -1,12 +1,12 @@
 ﻿$(document).ready(function () {
 
-    $("#btn-search2").click(function () {
+    $("#btn-search3").click(function () {
         console.log('here');
         var productType = $("#product2").val();
         console.log(productType);
         var supplier = $("#supplier").val();
         console.log(min);
-        var name = $("#name").val();
+        var name = $("#partName").val();
 
         var data =
         {
